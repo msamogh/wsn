@@ -785,6 +785,10 @@ struct random_data {
   int rand_sep;
   int32_t *end_ptr;
 };
+#line 374
+extern int rand(void ) __attribute((__leaf__)) __attribute((__nothrow__)) ;
+
+extern void srand(unsigned int __seed) __attribute((__leaf__)) __attribute((__nothrow__)) ;
 #line 412
 struct drand48_data {
 
@@ -799,7 +803,7 @@ extern void *malloc(size_t __size) __attribute((__leaf__)) __attribute((__nothro
 #line 483
 extern void free(void *__ptr) __attribute((__leaf__)) __attribute((__nothrow__)) ;
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2b1610ed3cf8, const void *arg_0x2b1610ed2020);
+typedef int (*__compar_fn_t)(const void *arg_0x2acf0d849cf8, const void *arg_0x2acf0d848020);
 #line 780
 __extension__ 
 #line 797
@@ -820,7 +824,7 @@ extern double fabs(double __x) __attribute((__leaf__)) __attribute((__nothrow__)
 
 extern double floor(double __x) __attribute((__leaf__)) __attribute((__nothrow__)) __attribute((const)) ;
 #line 250
-extern double erfc(double arg_0x2b1610f53618) __attribute((__leaf__)) __attribute((__nothrow__)) ;
+extern double erfc(double arg_0x2acf0d8c9618) __attribute((__leaf__)) __attribute((__nothrow__)) ;
 #line 326
 __extension__ 
 
@@ -1223,8 +1227,8 @@ typedef struct hashtable hashtable_t;
 #line 78
 struct hashtable *
 create_hashtable(unsigned int minsize, 
-unsigned int (*hashfunction)(void *arg_0x2b1611193020), 
-int (*key_eq_fn)(void *arg_0x2b1611193798, void *arg_0x2b1611193a38));
+unsigned int (*hashfunction)(void *arg_0x2acf0db09020), 
+int (*key_eq_fn)(void *arg_0x2acf0db09798, void *arg_0x2acf0db09a38));
 #line 103
 #line 102
 int 
@@ -1822,6 +1826,8 @@ struct itimerspec {
 
 
 struct sigevent;
+#line 192
+extern time_t time(time_t *__timer) __attribute((__leaf__)) __attribute((__nothrow__)) ;
 # 239 "/usr/include/time.h"
 struct tm;
 
@@ -1840,7 +1846,7 @@ struct tm;
 
 struct tm;
 # 46 "../../tos/lib/tossim/randomlib.h"
-static inline void RandomInitialise(int arg_0x2b16113a2610, int arg_0x2b16113a2878);
+static inline void RandomInitialise(int arg_0x2acf0dd18610, int arg_0x2acf0dd18878);
 static double RandomUniform(void );
 # 51 "../../tos/lib/tossim/sim_noise.c"
 int numCase1 = 0;
@@ -4067,11 +4073,11 @@ static error_t PlatformC__Init__init(void );
 # 67 "../../tos/interfaces/TaskBasic.nc"
 static error_t SimSchedulerBasicP__TaskBasic__postTask(
 # 49 "../../tos/lib/tossim/SimSchedulerBasicP.nc"
-uint8_t arg_0x2b16114b3108);
+uint8_t arg_0x2acf0de29108);
 # 75 "../../tos/interfaces/TaskBasic.nc"
 static void SimSchedulerBasicP__TaskBasic__default__runTask(
 # 49 "../../tos/lib/tossim/SimSchedulerBasicP.nc"
-uint8_t arg_0x2b16114b3108);
+uint8_t arg_0x2acf0de29108);
 # 57 "../../tos/interfaces/Scheduler.nc"
 static void SimSchedulerBasicP__Scheduler__init(void );
 
@@ -4114,7 +4120,7 @@ static long long int SimMoteP__SimMote__getStartTime(void );
 # 80 "../../tos/interfaces/AMSend.nc"
 static error_t TossimActiveMessageC__AMSend__send(
 # 47 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2b161167d408, 
+am_id_t arg_0x2acf0dff3408, 
 # 80 "../../tos/interfaces/AMSend.nc"
 am_addr_t addr, 
 #line 71
@@ -4137,7 +4143,7 @@ message_t *
 
 TossimActiveMessageC__Snoop__default__receive(
 # 49 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2b161167b1a0, 
+am_id_t arg_0x2acf0dff11a0, 
 # 71 "../../tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -4184,7 +4190,7 @@ message_t *
 
 TossimActiveMessageC__Receive__default__receive(
 # 48 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2b161167c5f8, 
+am_id_t arg_0x2acf0dff25f8, 
 # 71 "../../tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -4344,7 +4350,7 @@ error_t error);
 # 110 "../../tos/interfaces/AMSend.nc"
 static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__sendDone(
 # 48 "../../tos/system/AMQueueImplP.nc"
-am_id_t arg_0x2b161197e020, 
+am_id_t arg_0x2acf0e2f4488, 
 # 103 "../../tos/interfaces/AMSend.nc"
 message_t * msg, 
 
@@ -4357,7 +4363,7 @@ error_t error);
 # 75 "../../tos/interfaces/Send.nc"
 static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__send(
 # 46 "../../tos/system/AMQueueImplP.nc"
-uint8_t arg_0x2b1611980e18, 
+uint8_t arg_0x2acf0e2f6318, 
 # 67 "../../tos/interfaces/Send.nc"
 message_t * msg, 
 
@@ -4371,7 +4377,7 @@ uint8_t len);
 #line 100
 static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__default__sendDone(
 # 46 "../../tos/system/AMQueueImplP.nc"
-uint8_t arg_0x2b1611980e18, 
+uint8_t arg_0x2acf0e2f6318, 
 # 96 "../../tos/interfaces/Send.nc"
 message_t * msg, 
 
@@ -4448,11 +4454,11 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__TimerFrom__f
 #line 83
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__default__fired(
 # 48 "../../tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b1611c102f8);
+uint8_t arg_0x2acf0e5852f8);
 # 64 "../../tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__startPeriodic(
 # 48 "../../tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b1611c102f8, 
+uint8_t arg_0x2acf0e5852f8, 
 # 64 "../../tos/lib/timer/Timer.nc"
 uint32_t dt);
 # 82 "../../tos/lib/timer/Counter.nc"
@@ -4480,7 +4486,7 @@ int sim_main_start_mote(void )   ;
 # 75 "../../tos/interfaces/TaskBasic.nc"
 static void SimSchedulerBasicP__TaskBasic__runTask(
 # 49 "../../tos/lib/tossim/SimSchedulerBasicP.nc"
-uint8_t arg_0x2b16114b3108);
+uint8_t arg_0x2acf0de29108);
 
 
 
@@ -4668,7 +4674,7 @@ static am_addr_t TossimActiveMessageC__amAddress(void );
 # 110 "../../tos/interfaces/AMSend.nc"
 static void TossimActiveMessageC__AMSend__sendDone(
 # 47 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2b161167d408, 
+am_id_t arg_0x2acf0dff3408, 
 # 103 "../../tos/interfaces/AMSend.nc"
 message_t * msg, 
 
@@ -4687,7 +4693,7 @@ message_t *
 
 TossimActiveMessageC__Snoop__receive(
 # 49 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2b161167b1a0, 
+am_id_t arg_0x2acf0dff11a0, 
 # 71 "../../tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -4706,7 +4712,7 @@ message_t *
 
 TossimActiveMessageC__Receive__receive(
 # 48 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2b161167c5f8, 
+am_id_t arg_0x2acf0dff25f8, 
 # 71 "../../tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -5115,10 +5121,13 @@ message_t * msg,
 uint8_t len);
 # 64 "../../tos/lib/timer/Timer.nc"
 static void Tracker__Timer__startPeriodic(uint32_t dt);
-# 20 "Tracker.nc"
+# 19 "Tracker.nc"
 bool Tracker__busy[1000];
 message_t Tracker__pkt[1000];
-int16_t Tracker__distance[1000];
+long Tracker__r[1000];
+float Tracker__distance[1000];
+#line 22
+float Tracker__var[1000];
 int16_t Tracker__x[1000];
 #line 23
 int16_t Tracker__y[1000];
@@ -5131,8 +5140,9 @@ static inline void Tracker__Boot__booted(void );
 
 
 
+
 static inline void Tracker__Timer__fired(void );
-#line 49
+#line 50
 static inline void Tracker__AMControl__startDone(error_t err);
 
 
@@ -5208,7 +5218,7 @@ static inline void /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP
 # 80 "../../tos/interfaces/AMSend.nc"
 static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__send(
 # 48 "../../tos/system/AMQueueImplP.nc"
-am_id_t arg_0x2b161197e020, 
+am_id_t arg_0x2acf0e2f4488, 
 # 80 "../../tos/interfaces/AMSend.nc"
 am_addr_t addr, 
 #line 71
@@ -5225,7 +5235,7 @@ uint8_t len);
 # 100 "../../tos/interfaces/Send.nc"
 static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__sendDone(
 # 46 "../../tos/system/AMQueueImplP.nc"
-uint8_t arg_0x2b1611980e18, 
+uint8_t arg_0x2acf0e2f6318, 
 # 96 "../../tos/interfaces/Send.nc"
 message_t * msg, 
 
@@ -5625,7 +5635,7 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__TimerFrom__s
 
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__fired(
 # 48 "../../tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b1611c102f8);
+uint8_t arg_0x2acf0e5852f8);
 #line 71
 enum /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0____nesc_unnamed4340 {
 #line 71
@@ -6070,36 +6080,46 @@ static __inline  int16_t __nesc_ntoh_int16(const void * source)
   return __nesc_ntoh_uint16(source);
 }
 
-# 67 "Tracker.nc"
+# 68 "Tracker.nc"
 static inline message_t *Tracker__Receive__receive(message_t *msg, void *payload, uint8_t len)
-#line 67
+#line 68
 {
   if (len == sizeof(TrackerMsg )) {
       TrackerMsg *btrpkt = (TrackerMsg *)payload;
 
-#line 70
+#line 71
       if (__nesc_ntoh_uint16(btrpkt->type.nxdata) == DIST) {
-        sim_log_debug(111U, "Info", "Nodeid: %d, distance: %d", __nesc_ntoh_uint16(btrpkt->nodeid.nxdata), __nesc_ntoh_uint16(btrpkt->distance.nxdata));
+        sim_log_debug(111U, "Info", "Nodeid: %d, distance: %d\n", __nesc_ntoh_uint16(btrpkt->nodeid.nxdata), __nesc_ntoh_uint16(btrpkt->distance.nxdata));
         }
       else {
-#line 72
+#line 73
         if (__nesc_ntoh_uint16(btrpkt->type.nxdata) == COORD) {
             sim_log_debug(112U, "Moved", "Coords: %d, %d", __nesc_ntoh_int16(btrpkt->x.nxdata), __nesc_ntoh_int16(btrpkt->y.nxdata));
-            Tracker__distance[sim_node()] = sqrt(pow(Tracker__x[sim_node()] - __nesc_ntoh_int16(btrpkt->x.nxdata), 2) + pow(Tracker__y[sim_node()] - __nesc_ntoh_int16(btrpkt->y.nxdata), 2));
+            Tracker__r[sim_node()] = rand();
+            Tracker__var[sim_node()] = (float )(Tracker__r[sim_node()] % 200 / 100.0);
+            Tracker__var[sim_node()] = Tracker__r[sim_node()] % 2 == 0 ? -Tracker__var[sim_node()] : Tracker__var[sim_node()];
+            Tracker__distance[sim_node()] = sqrt(pow(Tracker__x[sim_node()] - __nesc_ntoh_int16(btrpkt->x.nxdata), 2) + pow(Tracker__y[sim_node()] - __nesc_ntoh_int16(btrpkt->y.nxdata), 2)) + Tracker__var[sim_node()];
+            if (Tracker__distance[sim_node()] <= 10) {
+              sim_log_debug(113U, "Moved", "Distance: %f\n", Tracker__distance[sim_node()]);
+              }
+            else {
+#line 82
+              sim_log_debug(114U, "Moved", "Out of range\n", Tracker__distance[sim_node()]);
+              }
           }
         else {
-#line 75
+#line 83
           if (__nesc_ntoh_uint16(btrpkt->type.nxdata) == INIT) {
               Tracker__x[sim_node()] = __nesc_ntoh_int16(btrpkt->x.nxdata);
               Tracker__y[sim_node()] = __nesc_ntoh_int16(btrpkt->y.nxdata);
-              sim_log_debug(113U, "Init", "Positioned at (%d, %d)", Tracker__x[sim_node()], Tracker__y[sim_node()]);
+              sim_log_debug(115U, "Init", "Positioned at (%d, %d)\n", Tracker__x[sim_node()], Tracker__y[sim_node()]);
               Tracker__id[sim_node()] = __nesc_ntoh_uint16(btrpkt->nodeid.nxdata);
             }
           }
         }
     }
   else 
-#line 81
+#line 89
     {
     }
 
@@ -6114,13 +6134,13 @@ static inline message_t *TossimActiveMessageC__Receive__default__receive(am_id_t
 }
 
 # 78 "../../tos/interfaces/Receive.nc"
-inline static message_t * TossimActiveMessageC__Receive__receive(am_id_t arg_0x2b161167c5f8, message_t * msg, void * payload, uint8_t len){
+inline static message_t * TossimActiveMessageC__Receive__receive(am_id_t arg_0x2acf0dff25f8, message_t * msg, void * payload, uint8_t len){
 #line 78
   nx_struct message_t *__nesc_result;
 #line 78
 
 #line 78
-  switch (arg_0x2b161167c5f8) {
+  switch (arg_0x2acf0dff25f8) {
 #line 78
     case 6:
 #line 78
@@ -6130,7 +6150,7 @@ inline static message_t * TossimActiveMessageC__Receive__receive(am_id_t arg_0x2
 #line 78
     default:
 #line 78
-      __nesc_result = TossimActiveMessageC__Receive__default__receive(arg_0x2b161167c5f8, msg, payload, len);
+      __nesc_result = TossimActiveMessageC__Receive__default__receive(arg_0x2acf0dff25f8, msg, payload, len);
 #line 78
       break;
 #line 78
@@ -6150,13 +6170,13 @@ static inline message_t *TossimActiveMessageC__Snoop__default__receive(am_id_t i
 }
 
 # 78 "../../tos/interfaces/Receive.nc"
-inline static message_t * TossimActiveMessageC__Snoop__receive(am_id_t arg_0x2b161167b1a0, message_t * msg, void * payload, uint8_t len){
+inline static message_t * TossimActiveMessageC__Snoop__receive(am_id_t arg_0x2acf0dff11a0, message_t * msg, void * payload, uint8_t len){
 #line 78
   nx_struct message_t *__nesc_result;
 #line 78
 
 #line 78
-    __nesc_result = TossimActiveMessageC__Snoop__default__receive(arg_0x2b161167b1a0, msg, payload, len);
+    __nesc_result = TossimActiveMessageC__Snoop__default__receive(arg_0x2acf0dff11a0, msg, payload, len);
 #line 78
 
 #line 78
@@ -6286,9 +6306,9 @@ inline static error_t Tracker__AMControl__start(void ){
 #line 104
 }
 #line 104
-# 49 "Tracker.nc"
+# 50 "Tracker.nc"
 static inline void Tracker__AMControl__startDone(error_t err)
-#line 49
+#line 50
 {
   if (err == SUCCESS) {
       sim_log_debug(110U, "Info", "AMControl started");
@@ -6313,9 +6333,9 @@ static inline void TossimPacketModelC__startDoneTask__runTask(void )
   TossimPacketModelC__Control__startDone(SUCCESS);
 }
 
-# 64 "Tracker.nc"
+# 65 "Tracker.nc"
 static inline void Tracker__AMControl__stopDone(error_t err)
-#line 64
+#line 65
 {
 }
 
@@ -6368,9 +6388,9 @@ static __inline  int8_t __nesc_hton_int8(void * target, int8_t value)
 }
 
 # 110 "../../tos/interfaces/AMSend.nc"
-inline static void TossimActiveMessageC__AMSend__sendDone(am_id_t arg_0x2b161167d408, message_t * msg, error_t error){
+inline static void TossimActiveMessageC__AMSend__sendDone(am_id_t arg_0x2acf0dff3408, message_t * msg, error_t error){
 #line 110
-  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__sendDone(arg_0x2b161167d408, msg, error);
+  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__sendDone(arg_0x2acf0dff3408, msg, error);
 #line 110
 }
 #line 110
@@ -6436,9 +6456,9 @@ static inline void CpmModelC__read_rssi_task__runTask(void )
   CpmModelC__ReadRssi__readDone(SUCCESS, noise + 45);
 }
 
-# 58 "Tracker.nc"
+# 59 "Tracker.nc"
 static inline void Tracker__AMSend__sendDone(message_t *msg, error_t error)
-#line 58
+#line 59
 {
   if (&Tracker__pkt[sim_node()] == msg) {
       Tracker__busy[sim_node()] = FALSE;
@@ -6466,9 +6486,9 @@ static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__default__send
 }
 
 # 100 "../../tos/interfaces/Send.nc"
-inline static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__sendDone(uint8_t arg_0x2b1611980e18, message_t * msg, error_t error){
+inline static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__sendDone(uint8_t arg_0x2acf0e2f6318, message_t * msg, error_t error){
 #line 100
-  switch (arg_0x2b1611980e18) {
+  switch (arg_0x2acf0e2f6318) {
 #line 100
     case 0U:
 #line 100
@@ -6478,7 +6498,7 @@ inline static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__sendDone(uint
 #line 100
     default:
 #line 100
-      /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__default__sendDone(arg_0x2b1611980e18, msg, error);
+      /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__default__sendDone(arg_0x2acf0e2f6318, msg, error);
 #line 100
       break;
 #line 100
@@ -6753,9 +6773,9 @@ static inline void SimSchedulerBasicP__TaskBasic__default__runTask(uint8_t id)
 }
 
 # 75 "../../tos/interfaces/TaskBasic.nc"
-inline static void SimSchedulerBasicP__TaskBasic__runTask(uint8_t arg_0x2b16114b3108){
+inline static void SimSchedulerBasicP__TaskBasic__runTask(uint8_t arg_0x2acf0de29108){
 #line 75
-  switch (arg_0x2b16114b3108) {
+  switch (arg_0x2acf0de29108) {
 #line 75
     case TossimPacketModelC__startDoneTask:
 #line 75
@@ -6807,7 +6827,7 @@ inline static void SimSchedulerBasicP__TaskBasic__runTask(uint8_t arg_0x2b16114b
 #line 75
     default:
 #line 75
-      SimSchedulerBasicP__TaskBasic__default__runTask(arg_0x2b16114b3108);
+      SimSchedulerBasicP__TaskBasic__default__runTask(arg_0x2acf0de29108);
 #line 75
       break;
 #line 75
@@ -6854,13 +6874,13 @@ inline static Atm128_TIFR_t /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAs
 }
 #line 53
 # 80 "../../tos/interfaces/AMSend.nc"
-inline static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__send(am_id_t arg_0x2b161197e020, am_addr_t addr, message_t * msg, uint8_t len){
+inline static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__send(am_id_t arg_0x2acf0e2f4488, am_addr_t addr, message_t * msg, uint8_t len){
 #line 80
   unsigned char __nesc_result;
 #line 80
 
 #line 80
-  __nesc_result = TossimActiveMessageC__AMSend__send(arg_0x2b161197e020, addr, msg, len);
+  __nesc_result = TossimActiveMessageC__AMSend__send(arg_0x2acf0e2f4488, addr, msg, len);
 #line 80
 
 #line 80
@@ -7060,13 +7080,13 @@ inline static void * Tracker__Packet__getPayload(message_t * msg, uint8_t len){
 #line 126
 }
 #line 126
-# 33 "Tracker.nc"
+# 34 "Tracker.nc"
 static inline void Tracker__Timer__fired(void )
 {
   if (!Tracker__busy[sim_node()]) {
       TrackerMsg *btrpkt = (TrackerMsg *)Tracker__Packet__getPayload(&Tracker__pkt[sim_node()], sizeof(TrackerMsg ));
 
-#line 37
+#line 38
       __nesc_hton_uint16(btrpkt->nodeid.nxdata, TOS_NODE_ID);
       __nesc_hton_uint16(btrpkt->type.nxdata, DIST);
       __nesc_hton_uint16(btrpkt->distance.nxdata, 3);
@@ -7075,7 +7095,7 @@ static inline void Tracker__Timer__fired(void )
           Tracker__busy[sim_node()] = TRUE;
         }
       else 
-#line 43
+#line 44
         {
           sim_log_debug(109U, "Info", "Couldn't send packet. Busy.");
         }
@@ -7088,9 +7108,9 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer
 }
 
 # 83 "../../tos/lib/timer/Timer.nc"
-inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__fired(uint8_t arg_0x2b1611c102f8){
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__fired(uint8_t arg_0x2acf0e5852f8){
 #line 83
-  switch (arg_0x2b1611c102f8) {
+  switch (arg_0x2acf0e5852f8) {
 #line 83
     case 0U:
 #line 83
@@ -7100,7 +7120,7 @@ inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer
 #line 83
     default:
 #line 83
-      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__default__fired(arg_0x2b1611c102f8);
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__default__fired(arg_0x2acf0e5852f8);
 #line 83
       break;
 #line 83
@@ -8477,6 +8497,7 @@ static inline void Tracker__Boot__booted(void )
   sim_log_debug(107U, "Boot", "%d booted", TOS_NODE_ID);
   Tracker__AMControl__start();
   Tracker__Timer__startPeriodic(250);
+  srand(time((void *)0));
 }
 
 # 60 "../../tos/interfaces/Boot.nc"
@@ -11231,10 +11252,22 @@ static int __nesc_nido_resolve(int __nesc_mote,
     *size = sizeof(Tracker__pkt[__nesc_mote]);
     return 0;
   }
+  if (!strcmp(varname, "Tracker__r"))
+  {
+    *addr = (uintptr_t)&Tracker__r[__nesc_mote];
+    *size = sizeof(Tracker__r[__nesc_mote]);
+    return 0;
+  }
   if (!strcmp(varname, "Tracker__distance"))
   {
     *addr = (uintptr_t)&Tracker__distance[__nesc_mote];
     *size = sizeof(Tracker__distance[__nesc_mote]);
+    return 0;
+  }
+  if (!strcmp(varname, "Tracker__var"))
+  {
+    *addr = (uintptr_t)&Tracker__var[__nesc_mote];
+    *size = sizeof(Tracker__var[__nesc_mote]);
     return 0;
   }
   if (!strcmp(varname, "Tracker__x"))
@@ -11417,7 +11450,9 @@ static void __nesc_nido_initialise(int __nesc_mote)
   /* Module Tracker */
   Tracker__busy[__nesc_mote] = FALSE;
   memset((void *)&Tracker__pkt[__nesc_mote], 0, sizeof Tracker__pkt[__nesc_mote]);
+  memset((void *)&Tracker__r[__nesc_mote], 0, sizeof Tracker__r[__nesc_mote]);
   memset((void *)&Tracker__distance[__nesc_mote], 0, sizeof Tracker__distance[__nesc_mote]);
+  memset((void *)&Tracker__var[__nesc_mote], 0, sizeof Tracker__var[__nesc_mote]);
   memset((void *)&Tracker__x[__nesc_mote], 0, sizeof Tracker__x[__nesc_mote]);
   memset((void *)&Tracker__y[__nesc_mote], 0, sizeof Tracker__y[__nesc_mote]);
   memset((void *)&Tracker__id[__nesc_mote], 0, sizeof Tracker__id[__nesc_mote]);

@@ -4,7 +4,7 @@ import random
 import time
 from TrackerMsg2 import *
 
-N = 3 + 1
+N = 20 + 1
 
 t = Tossim([])
 r = t.radio()
@@ -14,6 +14,7 @@ DIST = 2
 INIT = 3
 
 channels = ["Init", "Moved"]
+
 for c in channels:
 	t.addChannel(c, sys.stdout)
 
@@ -55,8 +56,8 @@ while not all([n.isOn() for n in nodes]):
 for i in range(1, N):
 	msg = TrackingMsg()
 	msg.set_nodeid(i)
-	msg.set_x(randint(-100, 100))
-	msg.set_y(randint(-100, 100))
+	msg.set_x(randint(-10, 10))
+	msg.set_y(randint(-10, 10))
 	msg.set_type(INIT);
 	pkt = t.newPacket()
 	pkt.setData(msg.data)
@@ -90,5 +91,5 @@ for m in movement:
 
 while True:
 	for i in range(200):
-		t.runNextEvent()
+		t.runNextEvent()	
 	raw_input()

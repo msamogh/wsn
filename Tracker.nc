@@ -5,7 +5,6 @@
 
 module Tracker @safe()
 {
-	provides interface Movement;
 	uses interface Boot;
 	uses interface Packet;
 	uses interface AMPacket;
@@ -19,7 +18,8 @@ implementation
 {
 	bool busy = FALSE;
 	message_t pkt;
-	int16_t distance;
+	long r;
+	float distance, var;
 	int16_t x, y;
 	uint16_t id;
 
@@ -28,6 +28,7 @@ implementation
 		dbg("Boot", "%d booted", TOS_NODE_ID);
 		call AMControl.start();
 		call Timer.startPeriodic( 250 );
+		srand(time(NULL));   // should only be called once
 	}
 
 	event void Timer.fired()
@@ -68,14 +69,21 @@ implementation
 		if (len == sizeof(TrackerMsg)) {
 			TrackerMsg* btrpkt = (TrackerMsg*)payload;
 			if (btrpkt->type == DIST)
-				dbg("Info", "Nodeid: %d, distance: %d", btrpkt->nodeid, btrpkt->distance);
+				dbg("Info", "Nodeid: %d, distance: %d\n", btrpkt->nodeid, btrpkt->distance);
 			else if (btrpkt->type == COORD) {
 				dbg("Moved", "Coords: %d, %d", btrpkt->x, btrpkt->y);
-				distance = sqrt(pow(x - btrpkt->x, 2) + pow(y - btrpkt->y, 2));
+				r = rand();
+				var = ((float)((r % 200) / 100.0));
+				var = (r % 2 == 0) ? -var : var;
+				distance = sqrt(pow(x - btrpkt->x, 2) + pow(y - btrpkt->y, 2)) + var;
+				if (distance <= 10)
+					dbg("Moved", "Distance: %f\n", distance);
+				else
+					dbg("Moved", "Out of range\n", distance);
 			} else if (btrpkt->type == INIT) {
 				x = btrpkt->x;
 				y = btrpkt->y;
-				dbg("Init", "Positioned at (%d, %d)", x, y);
+				dbg("Init", "Positioned at (%d, %d)\n", x, y);
 				id = btrpkt->nodeid;
 			}
 		} else {
@@ -84,8 +92,4 @@ implementation
 		return msg;
 	}
 
-	command void Movement.movedTo(int16_t nx, int16_t ny) {
-		dbg("Info", "Movement noticed");
-		dbg("Info", "(%d, %d)", nx, ny);
-	}	
 }
