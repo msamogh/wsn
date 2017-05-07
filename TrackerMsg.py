@@ -10,7 +10,7 @@ import tinyos.message.Message
 DEFAULT_MESSAGE_SIZE = 4
 
 # The Active Message type associated with this message.
-AM_TYPE = -1
+AM_TYPE = 6
 
 class TrackingMsg(tinyos.message.Message.Message):
 	# Create a new TrackingMsg of size 4.
