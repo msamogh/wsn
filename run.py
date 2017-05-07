@@ -8,9 +8,12 @@ N = 3 + 1
 
 t = Tossim([])
 r = t.radio()
-COORD = 1690
-DIST = 1699
-channels = ["Moved"]
+
+COORD = 1
+DIST = 2
+INIT = 3
+
+channels = ["Init", "Moved"]
 for c in channels:
 	t.addChannel(c, sys.stdout)
 
@@ -32,12 +35,7 @@ for line in lines:
 for i in range(1, N):
 	t.getNode(i).createNoiseModel()
 
-r.add(1, 2, -50)
-r.add(1, 3, -50)
-r.add(2, 3, -50)
-r.add(2, 1, -50)
-r.add(3, 1, -50)
-r.add(3, 2, -50)
+
 
 nodes = [t.getNode(i) for i in range(1, N)]
 
@@ -47,7 +45,27 @@ for i in nodes:
 
 movement = get_movement()
 print('First: ' + movement[0] + '\n\n\n')
-for m in movement[:90]:
+
+from random import randint
+
+while not all([n.isOn() for n in nodes]):
+	t.runNextEvent()
+
+# Initialize node positions and IDs
+for i in range(1, N):
+	msg = TrackingMsg()
+	msg.set_nodeid(i)
+	msg.set_x(randint(-100, 100))
+	msg.set_y(randint(-100, 100))
+	msg.set_type(INIT);
+	pkt = t.newPacket()
+	pkt.setData(msg.data)
+	pkt.setType(msg.get_amType())
+	pkt.setSource(0)
+	pkt.setDestination(i)
+	pkt.deliver(i, t.time() + 3)
+
+for m in movement:
 	msg = TrackingMsg()
 	msg.set_nodeid(0)	
 	msg.set_type(COORD)
@@ -59,7 +77,7 @@ for m in movement[:90]:
 
 	time = tstring[2] * 10 + 60000000000 * tstring[1] + 3600000000000 * tstring[0]
 
-	print(str(tstring) + ':  ' + str(time))
+	#print(str(tstring) + ':  ' + str(time))
 	#raw_input()
 
 	for i in range(1, N):

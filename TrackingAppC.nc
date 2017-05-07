@@ -1,5 +1,6 @@
 #include "Tracker.h"
 #include "Timer.h"
+#include <stdlib.h>
 
 configuration TrackingAppC
 {
@@ -9,10 +10,10 @@ implementation
 {
 	components MainC;
 	components ActiveMessageC;
+	components Tracker;
 	components new AMSenderC(6);
 	components new AMReceiverC(6);
 	components new TimerMilliC() as Timer;
-	components new Tracker(1, 0, 0) as Tracker;
 
 	Tracker.Receive -> AMReceiverC;
 	Tracker.Packet -> AMSenderC;

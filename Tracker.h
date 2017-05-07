@@ -10,8 +10,9 @@ nx_struct TrackerMsg
 
 enum {
   AM_TRACKER = 6,
-  COORD = 1690,
-  DIST = 1699,
+  COORD = 1,
+  DIST = 2,
+  INIT = 3,
   TIMER_PERIOD_MILLI = 250
 };
 

@@ -1,8 +1,9 @@
 #include <time.h>
 #include <stdlib.h>
+#include <math.h>
 #include "Tracker.h"
 
-generic module Tracker (uint16_t i, int16_t x, int16_t y)
+module Tracker @safe()
 {
 	provides interface Movement;
 	uses interface Boot;
@@ -18,6 +19,9 @@ implementation
 {
 	bool busy = FALSE;
 	message_t pkt;
+	int16_t distance;
+	int16_t x, y;
+	uint16_t id;
 
 	event void Boot.booted()
 	{
@@ -65,10 +69,17 @@ implementation
 			TrackerMsg* btrpkt = (TrackerMsg*)payload;
 			if (btrpkt->type == DIST)
 				dbg("Info", "Nodeid: %d, distance: %d", btrpkt->nodeid, btrpkt->distance);
-			else
+			else if (btrpkt->type == COORD) {
 				dbg("Moved", "Coords: %d, %d", btrpkt->x, btrpkt->y);
+				distance = sqrt(pow(x - btrpkt->x, 2) + pow(y - btrpkt->y, 2));
+			} else if (btrpkt->type == INIT) {
+				x = btrpkt->x;
+				y = btrpkt->y;
+				dbg("Init", "Positioned at (%d, %d)", x, y);
+				id = btrpkt->nodeid;
+			}
 		} else {
-			dbg("Info", "Yeno ondu");
+			
 		}
 		return msg;
 	}
