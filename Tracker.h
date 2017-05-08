@@ -3,7 +3,7 @@ nx_struct TrackerMsg
 {
 	nx_uint16_t nodeid;
 	nx_uint16_t type;
-	nx_uint16_t distance;
+  nx_uint16_t distance;
 	nx_int16_t x;
 	nx_int16_t y;
 };
@@ -13,6 +13,8 @@ enum {
   COORD = 1,
   DIST = 2,
   INIT = 3,
+  VOTING = 4,
+  COALITION = 5,
   TIMER_PERIOD_MILLI = 250
 };
 
