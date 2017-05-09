@@ -4,7 +4,7 @@ import random
 import time
 from TrackerMsg2 import *
 
-N = 20 + 1
+N = 25 + 1
 
 t = Tossim([])
 r = t.radio()
@@ -12,6 +12,8 @@ r = t.radio()
 COORD = 1
 DIST = 2
 INIT = 3
+VOTING = 4
+COALITION = 5
 
 channels = ["Init", "Moved"]
 

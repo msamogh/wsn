@@ -6,6 +6,8 @@ nx_struct TrackerMsg
   nx_uint16_t distance;
 	nx_int16_t x;
 	nx_int16_t y;
+  nx_int16_t originX;
+  nx_int16_t originY;
 };
 
 enum {

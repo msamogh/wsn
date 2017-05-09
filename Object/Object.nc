@@ -36,8 +36,20 @@ implementation
 		x_sign = rand() % 2;
 		dy = rand() % 5;
 		y_sign = rand() % 2;
-		dx = x_sign == 0 ? -dx : dx;
-		dy = y_sign == 0 ? -dy : dy;
+
+		if (x > 9)
+			dx = -dx;
+		else if (x < -9)
+			dx = dx;
+		else
+			dx = x_sign == 0 ? -dx : dx;
+		
+		if (y > 9)
+			dy = -dy;
+		else if (y < -9)
+			dy = dy;
+		else
+			dy = y_sign == 0 ? -dy : dy;
 
 		x = (x + dx);
 		y = (y + dy);
@@ -45,6 +57,7 @@ implementation
 		if (!busy) {
 			TrackerMsg* btrpkt = (TrackerMsg*)(call Packet.getPayload(&pkt, sizeof (TrackerMsg)));
 			btrpkt->nodeid = TOS_NODE_ID;
+			btrpkt->type = COORD;
 			btrpkt->distance = 77;
 			if (call AMSend.send(AM_BROADCAST_ADDR, &pkt, sizeof(TrackerMsg)) == SUCCESS) {
 				dbg("Moved", "Hey! I'm at (%d,%d)\n", x, y);

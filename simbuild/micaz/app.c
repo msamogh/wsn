@@ -803,8 +803,13 @@ extern void *malloc(size_t __size) __attribute((__leaf__)) __attribute((__nothro
 #line 483
 extern void free(void *__ptr) __attribute((__leaf__)) __attribute((__nothrow__)) ;
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2ae5bdf40cf8, const void *arg_0x2ae5bdf3f020);
-#line 780
+typedef int (*__compar_fn_t)(const void *arg_0x2b5db3c89cf8, const void *arg_0x2b5db3c88020);
+#line 775
+extern int abs(int __x) __attribute((__leaf__)) __attribute((__nothrow__)) __attribute((const)) ;
+
+
+
+
 __extension__ 
 #line 797
 __extension__ 
@@ -824,7 +829,7 @@ extern double fabs(double __x) __attribute((__leaf__)) __attribute((__nothrow__)
 
 extern double floor(double __x) __attribute((__leaf__)) __attribute((__nothrow__)) __attribute((const)) ;
 #line 250
-extern double erfc(double arg_0x2ae5bdfc0618) __attribute((__leaf__)) __attribute((__nothrow__)) ;
+extern double erfc(double arg_0x2b5db3d09618) __attribute((__leaf__)) __attribute((__nothrow__)) ;
 #line 326
 __extension__ 
 
@@ -1227,8 +1232,8 @@ typedef struct hashtable hashtable_t;
 #line 78
 struct hashtable *
 create_hashtable(unsigned int minsize, 
-unsigned int (*hashfunction)(void *arg_0x2ae5be200020), 
-int (*key_eq_fn)(void *arg_0x2ae5be200798, void *arg_0x2ae5be200a38));
+unsigned int (*hashfunction)(void *arg_0x2b5db3f49020), 
+int (*key_eq_fn)(void *arg_0x2b5db3f49798, void *arg_0x2b5db3f49a38));
 #line 103
 #line 102
 int 
@@ -1264,7 +1269,7 @@ typedef struct sim_log_channel {
 } sim_log_channel_t;
 
 enum __nesc_unnamed4272 {
-  SIM_LOG_OUTPUT_COUNT = 148U
+  SIM_LOG_OUTPUT_COUNT = 149U
 };
 
 sim_log_output_t outputs[SIM_LOG_OUTPUT_COUNT];
@@ -1846,7 +1851,7 @@ struct tm;
 
 struct tm;
 # 46 "../../tos/lib/tossim/randomlib.h"
-static inline void RandomInitialise(int arg_0x2ae5be40f610, int arg_0x2ae5be40f878);
+static inline void RandomInitialise(int arg_0x2b5db4158610, int arg_0x2b5db4158878);
 static double RandomUniform(void );
 # 51 "../../tos/lib/tossim/sim_noise.c"
 int numCase1 = 0;
@@ -2231,6 +2236,8 @@ nx_struct TrackerMsg {
   nx_uint16_t distance;
   nx_int16_t x;
   nx_int16_t y;
+  nx_int16_t originX;
+  nx_int16_t originY;
 } __attribute__((packed));
 
 enum __nesc_unnamed4280 {
@@ -4075,11 +4082,11 @@ static error_t PlatformC__Init__init(void );
 # 67 "../../tos/interfaces/TaskBasic.nc"
 static error_t SimSchedulerBasicP__TaskBasic__postTask(
 # 49 "../../tos/lib/tossim/SimSchedulerBasicP.nc"
-uint8_t arg_0x2ae5be520108);
+uint8_t arg_0x2b5db4269108);
 # 75 "../../tos/interfaces/TaskBasic.nc"
 static void SimSchedulerBasicP__TaskBasic__default__runTask(
 # 49 "../../tos/lib/tossim/SimSchedulerBasicP.nc"
-uint8_t arg_0x2ae5be520108);
+uint8_t arg_0x2b5db4269108);
 # 57 "../../tos/interfaces/Scheduler.nc"
 static void SimSchedulerBasicP__Scheduler__init(void );
 
@@ -4122,7 +4129,7 @@ static long long int SimMoteP__SimMote__getStartTime(void );
 # 80 "../../tos/interfaces/AMSend.nc"
 static error_t TossimActiveMessageC__AMSend__send(
 # 47 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2ae5be6ea408, 
+am_id_t arg_0x2b5db4432408, 
 # 80 "../../tos/interfaces/AMSend.nc"
 am_addr_t addr, 
 #line 71
@@ -4145,7 +4152,7 @@ message_t *
 
 TossimActiveMessageC__Snoop__default__receive(
 # 49 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2ae5be6e81a0, 
+am_id_t arg_0x2b5db44301a0, 
 # 71 "../../tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -4175,14 +4182,6 @@ message_t * msg,
 uint8_t len);
 #line 106
 static uint8_t TossimActiveMessageC__Packet__maxPayloadLength(void );
-#line 94
-static void TossimActiveMessageC__Packet__setPayloadLength(
-#line 90
-message_t * msg, 
-
-
-
-uint8_t len);
 # 78 "../../tos/interfaces/Receive.nc"
 static 
 #line 74
@@ -4192,7 +4191,7 @@ message_t *
 
 TossimActiveMessageC__Receive__default__receive(
 # 48 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2ae5be6e95f8, 
+am_id_t arg_0x2b5db44315f8, 
 # 71 "../../tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -4231,26 +4230,10 @@ static am_addr_t TossimActiveMessageC__AMPacket__address(void );
 static am_addr_t TossimActiveMessageC__AMPacket__destination(
 #line 74
 message_t * amsg);
-#line 103
-static void TossimActiveMessageC__AMPacket__setDestination(
-#line 99
-message_t * amsg, 
-
-
-
-am_addr_t addr);
 #line 147
 static am_id_t TossimActiveMessageC__AMPacket__type(
 #line 143
 message_t * amsg);
-#line 162
-static void TossimActiveMessageC__AMPacket__setType(
-#line 158
-message_t * amsg, 
-
-
-
-am_id_t t);
 #line 136
 static bool TossimActiveMessageC__AMPacket__isForMe(
 #line 133
@@ -4328,19 +4311,6 @@ void * payload,
 uint8_t len);
 # 83 "../../tos/lib/timer/Timer.nc"
 static void Tracker__Timer__fired(void );
-# 80 "../../tos/interfaces/AMSend.nc"
-static error_t /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__AMSend__send(am_addr_t addr, 
-#line 71
-message_t * msg, 
-
-
-
-
-
-
-
-
-uint8_t len);
 # 100 "../../tos/interfaces/Send.nc"
 static void /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__Send__sendDone(
 #line 96
@@ -4352,7 +4322,7 @@ error_t error);
 # 110 "../../tos/interfaces/AMSend.nc"
 static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__sendDone(
 # 48 "../../tos/system/AMQueueImplP.nc"
-am_id_t arg_0x2ae5bea55488, 
+am_id_t arg_0x2b5db4796020, 
 # 103 "../../tos/interfaces/AMSend.nc"
 message_t * msg, 
 
@@ -4362,24 +4332,10 @@ message_t * msg,
 
 
 error_t error);
-# 75 "../../tos/interfaces/Send.nc"
-static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__send(
-# 46 "../../tos/system/AMQueueImplP.nc"
-uint8_t arg_0x2ae5bea1f318, 
-# 67 "../../tos/interfaces/Send.nc"
-message_t * msg, 
-
-
-
-
-
-
-
-uint8_t len);
-#line 100
+# 100 "../../tos/interfaces/Send.nc"
 static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__default__sendDone(
 # 46 "../../tos/system/AMQueueImplP.nc"
-uint8_t arg_0x2ae5bea1f318, 
+uint8_t arg_0x2b5db4799e18, 
 # 96 "../../tos/interfaces/Send.nc"
 message_t * msg, 
 
@@ -4456,11 +4412,11 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__TimerFrom__f
 #line 83
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__default__fired(
 # 48 "../../tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2ae5becc22f8);
+uint8_t arg_0x2b5db4a042f8);
 # 64 "../../tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__startPeriodic(
 # 48 "../../tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2ae5becc22f8, 
+uint8_t arg_0x2b5db4a042f8, 
 # 64 "../../tos/lib/timer/Timer.nc"
 uint32_t dt);
 # 82 "../../tos/lib/timer/Counter.nc"
@@ -4488,7 +4444,7 @@ int sim_main_start_mote(void )   ;
 # 75 "../../tos/interfaces/TaskBasic.nc"
 static void SimSchedulerBasicP__TaskBasic__runTask(
 # 49 "../../tos/lib/tossim/SimSchedulerBasicP.nc"
-uint8_t arg_0x2ae5be520108);
+uint8_t arg_0x2b5db4269108);
 
 
 
@@ -4676,7 +4632,7 @@ static am_addr_t TossimActiveMessageC__amAddress(void );
 # 110 "../../tos/interfaces/AMSend.nc"
 static void TossimActiveMessageC__AMSend__sendDone(
 # 47 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2ae5be6ea408, 
+am_id_t arg_0x2b5db4432408, 
 # 103 "../../tos/interfaces/AMSend.nc"
 message_t * msg, 
 
@@ -4695,7 +4651,7 @@ message_t *
 
 TossimActiveMessageC__Snoop__receive(
 # 49 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2ae5be6e81a0, 
+am_id_t arg_0x2b5db44301a0, 
 # 71 "../../tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -4714,7 +4670,7 @@ message_t *
 
 TossimActiveMessageC__Receive__receive(
 # 48 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2ae5be6e95f8, 
+am_id_t arg_0x2b5db44315f8, 
 # 71 "../../tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -4738,7 +4694,7 @@ static inline tossim_header_t *TossimActiveMessageC__getHeader(message_t *amsg);
 
 
 
-static error_t TossimActiveMessageC__AMSend__send(am_id_t id, am_addr_t addr, 
+static inline error_t TossimActiveMessageC__AMSend__send(am_id_t id, am_addr_t addr, 
 message_t *amsg, 
 uint8_t len);
 #line 103
@@ -4764,11 +4720,6 @@ static inline am_addr_t TossimActiveMessageC__AMPacket__address(void );
 
 
 static am_addr_t TossimActiveMessageC__AMPacket__destination(message_t *amsg);
-
-
-
-
-static inline void TossimActiveMessageC__AMPacket__setDestination(message_t *amsg, am_addr_t addr);
 #line 160
 static inline bool TossimActiveMessageC__AMPacket__isForMe(message_t *amsg);
 
@@ -4776,22 +4727,12 @@ static inline bool TossimActiveMessageC__AMPacket__isForMe(message_t *amsg);
 
 
 static am_id_t TossimActiveMessageC__AMPacket__type(message_t *amsg);
-
-
-
-
-static inline void TossimActiveMessageC__AMPacket__setType(message_t *amsg, am_id_t t);
-
-
-
-
-
-
+#line 177
 static inline uint8_t TossimActiveMessageC__Packet__payloadLength(message_t *msg);
 
 
 
-static inline void TossimActiveMessageC__Packet__setPayloadLength(message_t *msg, uint8_t len);
+
 
 
 
@@ -5094,33 +5035,6 @@ static am_addr_t ActiveMessageAddressC__ActiveMessageAddress__amAddress(void );
 static inline am_addr_t ActiveMessageAddressC__amAddress(void );
 # 104 "../../tos/interfaces/SplitControl.nc"
 static error_t Tracker__AMControl__start(void );
-# 126 "../../tos/interfaces/Packet.nc"
-static 
-#line 123
-void * 
-
-
-Tracker__Packet__getPayload(
-#line 121
-message_t * msg, 
-
-
-
-
-uint8_t len);
-# 80 "../../tos/interfaces/AMSend.nc"
-static error_t Tracker__AMSend__send(am_addr_t addr, 
-#line 71
-message_t * msg, 
-
-
-
-
-
-
-
-
-uint8_t len);
 # 64 "../../tos/lib/timer/Timer.nc"
 static void Tracker__Timer__startPeriodic(uint32_t dt);
 # 19 "Tracker.nc"
@@ -5140,30 +5054,16 @@ float Tracker__utility[1000];
 int Tracker__coalition_size[1000];
 bool Tracker__open[1000];
 
+float Tracker__ETA[1000];
+float Tracker__R[1000];
 
-float Tracker__inverse[1000][25][25];
+
+
 
 uint16_t Tracker__cluster_head_id[1000];
-
-static float Tracker__determinant(float a[25][25], float k);
-#line 77
-static inline void Tracker__transpose(float d, float fac[25][25], float r);
-#line 98
-static inline void Tracker__cofactor(float num[25][25], float f);
-#line 131
-static void Tracker__multiplyMatrices(float firstMatrix[][25], float secondMatrix[][25], float mult[][25], int rowFirst, int columnFirst, int rowSecond, int columnSecond);
-#line 157
-static inline void Tracker__transpose2(float matrix[][25], float trans[][25], int row, int col);
-
-
-
-
-
-
-
-
+#line 169
 static inline float Tracker__getutility(void );
-#line 193
+#line 216
 static inline void Tracker__Boot__booted(void );
 
 
@@ -5173,7 +5073,7 @@ static inline void Tracker__Boot__booted(void );
 
 
 static inline void Tracker__Timer__fired(void );
-#line 217
+#line 240
 static inline void Tracker__AMControl__startDone(error_t err);
 
 
@@ -5189,8 +5089,7 @@ static inline void Tracker__AMSend__sendDone(message_t *msg, error_t error);
 
 
 static inline void Tracker__AMControl__stopDone(error_t err);
-
-
+#line 278
 static inline message_t *Tracker__Receive__receive(message_t *msg, void *payload, uint8_t len);
 # 110 "../../tos/interfaces/AMSend.nc"
 static void /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__AMSend__sendDone(
@@ -5203,52 +5102,12 @@ message_t * msg,
 
 
 error_t error);
-# 75 "../../tos/interfaces/Send.nc"
-static error_t /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__Send__send(
-#line 67
-message_t * msg, 
-
-
-
-
-
-
-
-uint8_t len);
-# 103 "../../tos/interfaces/AMPacket.nc"
-static void /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__AMPacket__setDestination(
-#line 99
-message_t * amsg, 
-
-
-
-am_addr_t addr);
-#line 162
-static void /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__AMPacket__setType(
-#line 158
-message_t * amsg, 
-
-
-
-am_id_t t);
-# 53 "../../tos/system/AMQueueEntryP.nc"
-static inline error_t /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__AMSend__send(am_addr_t dest, 
-message_t *msg, 
-uint8_t len);
-
-
-
-
-
-
-
-
-
+# 65 "../../tos/system/AMQueueEntryP.nc"
 static inline void /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__Send__sendDone(message_t *m, error_t err);
 # 80 "../../tos/interfaces/AMSend.nc"
 static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__send(
 # 48 "../../tos/system/AMQueueImplP.nc"
-am_id_t arg_0x2ae5bea55488, 
+am_id_t arg_0x2b5db4796020, 
 # 80 "../../tos/interfaces/AMSend.nc"
 am_addr_t addr, 
 #line 71
@@ -5265,7 +5124,7 @@ uint8_t len);
 # 100 "../../tos/interfaces/Send.nc"
 static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__sendDone(
 # 46 "../../tos/system/AMQueueImplP.nc"
-uint8_t arg_0x2ae5bea1f318, 
+uint8_t arg_0x2b5db4799e18, 
 # 96 "../../tos/interfaces/Send.nc"
 message_t * msg, 
 
@@ -5276,14 +5135,6 @@ error_t error);
 static uint8_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Packet__payloadLength(
 #line 74
 message_t * msg);
-#line 94
-static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Packet__setPayloadLength(
-#line 90
-message_t * msg, 
-
-
-
-uint8_t len);
 # 67 "../../tos/interfaces/TaskBasic.nc"
 static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__errorTask__postTask(void );
 # 78 "../../tos/interfaces/AMPacket.nc"
@@ -5318,16 +5169,13 @@ uint8_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[1000];
 /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue_entry_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[1000][1];
 uint8_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__cancelMask[1000][1 / 8 + 1];
 
-static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__tryToSend(void );
+static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__tryToSend(void );
 
 static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__nextPacket(void );
-#line 90
-static inline error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__send(uint8_t clientId, message_t *msg, 
-uint8_t len);
 #line 126
 static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__CancelTask__runTask(void );
 #line 163
-static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__sendDone(uint8_t last, message_t * msg, error_t err);
+static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__sendDone(uint8_t last, message_t * msg, error_t err);
 
 
 
@@ -5338,7 +5186,7 @@ static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__errorTask__runTask(
 
 
 
-static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__tryToSend(void );
+static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__tryToSend(void );
 #line 189
 static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__sendDone(am_id_t id, message_t *msg, error_t err);
 #line 215
@@ -5665,7 +5513,7 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__TimerFrom__s
 
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__fired(
 # 48 "../../tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2ae5becc22f8);
+uint8_t arg_0x2b5db4a042f8);
 #line 71
 enum /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0____nesc_unnamed4340 {
 #line 71
@@ -6048,6 +5896,18 @@ static inline sim_event_t *TossimActiveMessageC__allocate_deliver_event(int node
   return evt;
 }
 
+#line 189
+static inline void *TossimActiveMessageC__Packet__getPayload(message_t *msg, uint8_t len)
+#line 189
+{
+  if (len <= 28) {
+      return msg->data;
+    }
+  else {
+      return (void *)0;
+    }
+}
+
 #line 185
 static inline uint8_t TossimActiveMessageC__Packet__maxPayloadLength(void )
 #line 185
@@ -6110,154 +5970,75 @@ static __inline  int16_t __nesc_ntoh_int16(const void * source)
   return __nesc_ntoh_uint16(source);
 }
 
-# 77 "Tracker.nc"
-static inline void Tracker__transpose(float d, float fac[25][25], float r)
-{
-  int i;
-#line 79
-  int j;
-  float b[25][25];
-
-  for (i = 0; i < r; i++) 
-    {
-      for (j = 0; j < r; j++) 
-        {
-          b[i][j] = fac[j][i];
-        }
-    }
-  for (i = 0; i < r; i++) 
-    {
-      for (j = 0; j < r; j++) 
-        {
-          Tracker__inverse[sim_node()][i][j] = b[i][j] / d;
-        }
-    }
-}
-
-static inline void Tracker__cofactor(float num[25][25], float f)
-{
-  float b[25][25];
-#line 100
-  float fac[25][25];
-  int p;
-#line 101
-  int q;
-#line 101
-  int m;
-#line 101
-  int n;
-#line 101
-  int i;
-#line 101
-  int j;
-
-#line 102
-  for (q = 0; q < f; q++) 
-    {
-      for (p = 0; p < f; p++) 
-        {
-          m = 0;
-          n = 0;
-          for (i = 0; i < f; i++) 
-            {
-              for (j = 0; j < f; j++) 
-                {
-                  if (i != q && j != p) 
-                    {
-                      b[m][n] = num[i][j];
-                      if (n < f - 2) {
-                        n++;
-                        }
-                      else {
-                          n = 0;
-                          m++;
-                        }
-                    }
-                }
-            }
-          fac[q][p] = pow(-1, q + p) * Tracker__determinant(b, f - 1);
-        }
-    }
-  Tracker__transpose(Tracker__determinant(num, f), fac, f);
-}
-
-#line 157
-static inline void Tracker__transpose2(float matrix[][25], float trans[][25], int row, int col)
-#line 157
-{
-  int i;
-#line 158
-  int j;
-
-#line 159
-  for (i = 0; i < row; i++) {
-      for (j = 0; j < col; j++) {
-          trans[j][i] = matrix[i][j];
-        }
-    }
-}
-
+# 169 "Tracker.nc"
 static inline float Tracker__getutility(void )
-#line 166
+#line 169
 {
-  float h[25][25];
-#line 167
-  float hT[25][25];
-#line 167
-  float hhT[25][25];
-#line 167
-  float beforeB[25][25];
-#line 167
-  float b[25];
+
   int i;
-#line 168
+#line 171
   int j;
+  float value;
+#line 172
+  float sum1 = 0;
+#line 172
+  float sum2 = 0;
+#line 172
+  float avgDistance = 0;
+#line 172
+  float temp;
 
   if (Tracker__coalition_size[sim_node()] == 1) {
-#line 170
+#line 174
     return 0;
     }
   else {
-#line 171
+#line 175
     if (Tracker__coalition_size[sim_node()] == 2) {
-#line 171
+#line 175
       return 0.0001;
       }
     }
+#line 177
+  for (i = 0; i < Tracker__coalition_size[sim_node()]; i++) 
+    avgDistance += __nesc_ntoh_uint16(Tracker__estimates[sim_node()][i]->distance.nxdata) / 1000.0;
+  avgDistance /= (float )Tracker__coalition_size[sim_node()];
+
+  sim_log_debug(107U, "Moved", "avgDistance: %f", avgDistance);
+
   for (i = 0; i < Tracker__coalition_size[sim_node()]; i++) {
-      h[i][0] = __nesc_ntoh_int16(Tracker__estimates[sim_node()][i]->x.nxdata);
-      h[i][1] = __nesc_ntoh_int16(Tracker__estimates[sim_node()][i]->y.nxdata);
+      temp = __nesc_ntoh_uint16(Tracker__estimates[sim_node()][i]->distance.nxdata) - abs(avgDistance - __nesc_ntoh_uint16(Tracker__estimates[sim_node()][i]->distance.nxdata));
+      sum1 += temp;
     }
-
+  sum1 /= pow(Tracker__R[sim_node()], 2);
 
   for (i = 0; i < Tracker__coalition_size[sim_node()]; i++) {
-      b[i] = pow(__nesc_ntoh_int16(Tracker__estimates[sim_node()][i]->x.nxdata), 2) + pow(__nesc_ntoh_int16(Tracker__estimates[sim_node()][i]->y.nxdata), 2) - __nesc_ntoh_uint16(Tracker__estimates[sim_node()][i]->distance.nxdata) / 1000.0;
+      sum2 += pow(Tracker__x[sim_node()] - __nesc_ntoh_int16(Tracker__estimates[sim_node()][i]->originX.nxdata), 2) + pow(Tracker__y[sim_node()] - __nesc_ntoh_int16(Tracker__estimates[sim_node()][i]->originY.nxdata), 2);
     }
+  sum2 /= pow(Tracker__R[sim_node()], 2);
 
-  Tracker__transpose2(h, hT, Tracker__coalition_size[sim_node()], 2);
-  Tracker__multiplyMatrices(hT, h, hhT, 2, Tracker__coalition_size[sim_node()], Tracker__coalition_size[sim_node()], 2);
-  Tracker__cofactor(hhT, Tracker__coalition_size[sim_node()]);
-  Tracker__multiplyMatrices(Tracker__inverse[sim_node()], hT, beforeB, 2, 2, 2, Tracker__coalition_size[sim_node()]);
+  value = (1 - Tracker__ETA[sim_node()]) * (Tracker__coalition_size[sim_node()] - sum1) - Tracker__ETA[sim_node()] * sum2;
+#line 211
+  sim_log_debug(108U, "Moved", "Coalition value: %f", value);
 
-
-  return 0;
+  return value;
 }
 
-#line 234
+#line 278
 static inline message_t *Tracker__Receive__receive(message_t *msg, void *payload, uint8_t len)
-#line 234
+#line 278
 {
   if (len == sizeof(TrackerMsg )) {
       TrackerMsg *btrpkt = (TrackerMsg *)payload;
 
       switch (__nesc_ntoh_uint16(btrpkt->type.nxdata)) {
 
-          case DIST: 
-            sim_log_debug(111U, "Info", "Nodeid: %d, distance: %d\n", __nesc_ntoh_uint16(btrpkt->nodeid.nxdata), __nesc_ntoh_uint16(btrpkt->distance.nxdata));
-          break;
+
+
+
 
           case COORD: 
-            sim_log_debug(112U, "Moved", "Coords: %d, %d", __nesc_ntoh_int16(btrpkt->x.nxdata), __nesc_ntoh_int16(btrpkt->y.nxdata));
+            sim_log_debug(113U, "Moved", "Coords: %d, %d", __nesc_ntoh_int16(btrpkt->x.nxdata), __nesc_ntoh_int16(btrpkt->y.nxdata));
 
 
           Tracker__open[sim_node()] = FALSE;
@@ -6274,18 +6055,18 @@ static inline message_t *Tracker__Receive__receive(message_t *msg, void *payload
           Tracker__cluster_head_id[sim_node()] = TOS_NODE_ID;
 
           if (Tracker__distance[sim_node()] <= 10) {
-              sim_log_debug(113U, "Moved", "Distance: %f\n", Tracker__distance[sim_node()]);
+              sim_log_debug(114U, "Moved", "Distance: %f\n", Tracker__distance[sim_node()]);
               Tracker__open[sim_node()] = TRUE;
             }
           else {
-              sim_log_debug(114U, "Moved", "Out of range\n", Tracker__distance[sim_node()]);
+              sim_log_debug(115U, "Moved", "Out of range\n", Tracker__distance[sim_node()]);
             }
           break;
 
           case INIT: 
             Tracker__x[sim_node()] = __nesc_ntoh_int16(btrpkt->x.nxdata);
           Tracker__y[sim_node()] = __nesc_ntoh_int16(btrpkt->y.nxdata);
-          sim_log_debug(115U, "Init", "Positioned at (%d, %d)\n", Tracker__x[sim_node()], Tracker__y[sim_node()]);
+          sim_log_debug(116U, "Init", "Positioned at (%d, %d)\n", Tracker__x[sim_node()], Tracker__y[sim_node()]);
           break;
 
           case COALITION: 
@@ -6293,8 +6074,7 @@ static inline message_t *Tracker__Receive__receive(message_t *msg, void *payload
                 Tracker__estimates[sim_node()][++Tracker__coalition_size[sim_node()]] = btrpkt;
                 if (Tracker__getutility() > Tracker__utility[sim_node()]) {
                   }
-                else 
-                  {
+                else {
                     Tracker__coalition_size[sim_node()]--;
                   }
               }
@@ -6312,13 +6092,13 @@ static inline message_t *TossimActiveMessageC__Receive__default__receive(am_id_t
 }
 
 # 78 "../../tos/interfaces/Receive.nc"
-inline static message_t * TossimActiveMessageC__Receive__receive(am_id_t arg_0x2ae5be6e95f8, message_t * msg, void * payload, uint8_t len){
+inline static message_t * TossimActiveMessageC__Receive__receive(am_id_t arg_0x2b5db44315f8, message_t * msg, void * payload, uint8_t len){
 #line 78
   nx_struct message_t *__nesc_result;
 #line 78
 
 #line 78
-  switch (arg_0x2ae5be6e95f8) {
+  switch (arg_0x2b5db44315f8) {
 #line 78
     case 6:
 #line 78
@@ -6328,7 +6108,7 @@ inline static message_t * TossimActiveMessageC__Receive__receive(am_id_t arg_0x2
 #line 78
     default:
 #line 78
-      __nesc_result = TossimActiveMessageC__Receive__default__receive(arg_0x2ae5be6e95f8, msg, payload, len);
+      __nesc_result = TossimActiveMessageC__Receive__default__receive(arg_0x2b5db44315f8, msg, payload, len);
 #line 78
       break;
 #line 78
@@ -6348,13 +6128,13 @@ static inline message_t *TossimActiveMessageC__Snoop__default__receive(am_id_t i
 }
 
 # 78 "../../tos/interfaces/Receive.nc"
-inline static message_t * TossimActiveMessageC__Snoop__receive(am_id_t arg_0x2ae5be6e81a0, message_t * msg, void * payload, uint8_t len){
+inline static message_t * TossimActiveMessageC__Snoop__receive(am_id_t arg_0x2b5db44301a0, message_t * msg, void * payload, uint8_t len){
 #line 78
   nx_struct message_t *__nesc_result;
 #line 78
 
 #line 78
-    __nesc_result = TossimActiveMessageC__Snoop__default__receive(arg_0x2ae5be6e81a0, msg, payload, len);
+    __nesc_result = TossimActiveMessageC__Snoop__default__receive(arg_0x2b5db44301a0, msg, payload, len);
 #line 78
 
 #line 78
@@ -6484,15 +6264,15 @@ inline static error_t Tracker__AMControl__start(void ){
 #line 104
 }
 #line 104
-# 217 "Tracker.nc"
+# 240 "Tracker.nc"
 static inline void Tracker__AMControl__startDone(error_t err)
-#line 217
+#line 240
 {
   if (err == SUCCESS) {
       sim_log_debug(110U, "Info", "AMControl started");
     }
   else 
-#line 220
+#line 243
     {
       Tracker__AMControl__start();
     }
@@ -6513,9 +6293,9 @@ static inline void TossimPacketModelC__startDoneTask__runTask(void )
   TossimPacketModelC__Control__startDone(SUCCESS);
 }
 
-# 231 "Tracker.nc"
+# 254 "Tracker.nc"
 static inline void Tracker__AMControl__stopDone(error_t err)
-#line 231
+#line 254
 {
 }
 
@@ -6568,9 +6348,9 @@ static __inline  int8_t __nesc_hton_int8(void * target, int8_t value)
 }
 
 # 110 "../../tos/interfaces/AMSend.nc"
-inline static void TossimActiveMessageC__AMSend__sendDone(am_id_t arg_0x2ae5be6ea408, message_t * msg, error_t error){
+inline static void TossimActiveMessageC__AMSend__sendDone(am_id_t arg_0x2b5db4432408, message_t * msg, error_t error){
 #line 110
-  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__sendDone(arg_0x2ae5be6ea408, msg, error);
+  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__sendDone(arg_0x2b5db4432408, msg, error);
 #line 110
 }
 #line 110
@@ -6636,9 +6416,16 @@ static inline void CpmModelC__read_rssi_task__runTask(void )
   CpmModelC__ReadRssi__readDone(SUCCESS, noise + 45);
 }
 
-# 225 "Tracker.nc"
+# 169 "../../tos/system/AMQueueImplP.nc"
+static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__errorTask__runTask(void )
+#line 169
+{
+  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__sendDone(/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()], /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()]].msg, FAIL);
+}
+
+# 248 "Tracker.nc"
 static inline void Tracker__AMSend__sendDone(message_t *msg, error_t error)
-#line 225
+#line 248
 {
   if (&Tracker__pkt[sim_node()] == msg) {
       Tracker__busy[sim_node()] = FALSE;
@@ -6666,9 +6453,9 @@ static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__default__send
 }
 
 # 100 "../../tos/interfaces/Send.nc"
-inline static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__sendDone(uint8_t arg_0x2ae5bea1f318, message_t * msg, error_t error){
+inline static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__sendDone(uint8_t arg_0x2b5db4799e18, message_t * msg, error_t error){
 #line 100
-  switch (arg_0x2ae5bea1f318) {
+  switch (arg_0x2b5db4799e18) {
 #line 100
     case 0U:
 #line 100
@@ -6678,7 +6465,7 @@ inline static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__sendDone(uint
 #line 100
     default:
 #line 100
-      /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__default__sendDone(arg_0x2ae5bea1f318, msg, error);
+      /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__default__sendDone(arg_0x2b5db4799e18, msg, error);
 #line 100
       break;
 #line 100
@@ -6686,22 +6473,7 @@ inline static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__sendDone(uint
 #line 100
 }
 #line 100
-# 163 "../../tos/system/AMQueueImplP.nc"
-static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__sendDone(uint8_t last, message_t * msg, error_t err)
-#line 163
-{
-  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][last].msg = (void *)0;
-  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__tryToSend();
-  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__sendDone(last, msg, err);
-}
-
-static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__errorTask__runTask(void )
-#line 169
-{
-  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__sendDone(/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()], /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()]].msg, FAIL);
-}
-
-#line 126
+# 126 "../../tos/system/AMQueueImplP.nc"
 static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__CancelTask__runTask(void )
 #line 126
 {
@@ -6953,9 +6725,9 @@ static inline void SimSchedulerBasicP__TaskBasic__default__runTask(uint8_t id)
 }
 
 # 75 "../../tos/interfaces/TaskBasic.nc"
-inline static void SimSchedulerBasicP__TaskBasic__runTask(uint8_t arg_0x2ae5be520108){
+inline static void SimSchedulerBasicP__TaskBasic__runTask(uint8_t arg_0x2b5db4269108){
 #line 75
-  switch (arg_0x2ae5be520108) {
+  switch (arg_0x2b5db4269108) {
 #line 75
     case TossimPacketModelC__startDoneTask:
 #line 75
@@ -7007,7 +6779,7 @@ inline static void SimSchedulerBasicP__TaskBasic__runTask(uint8_t arg_0x2ae5be52
 #line 75
     default:
 #line 75
-      SimSchedulerBasicP__TaskBasic__default__runTask(arg_0x2ae5be520108);
+      SimSchedulerBasicP__TaskBasic__default__runTask(arg_0x2b5db4269108);
 #line 75
       break;
 #line 75
@@ -7053,233 +6825,9 @@ inline static Atm128_TIFR_t /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAs
 #line 53
 }
 #line 53
-# 80 "../../tos/interfaces/AMSend.nc"
-inline static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__send(am_id_t arg_0x2ae5bea55488, am_addr_t addr, message_t * msg, uint8_t len){
-#line 80
-  unsigned char __nesc_result;
-#line 80
-
-#line 80
-  __nesc_result = TossimActiveMessageC__AMSend__send(arg_0x2ae5bea55488, addr, msg, len);
-#line 80
-
-#line 80
-  return __nesc_result;
-#line 80
-}
-#line 80
-# 78 "../../tos/interfaces/AMPacket.nc"
-inline static am_addr_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMPacket__destination(message_t * amsg){
-#line 78
-  unsigned short __nesc_result;
-#line 78
-
-#line 78
-  __nesc_result = TossimActiveMessageC__AMPacket__destination(amsg);
-#line 78
-
-#line 78
-  return __nesc_result;
-#line 78
-}
-#line 78
-#line 147
-inline static am_id_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMPacket__type(message_t * amsg){
-#line 147
-  unsigned char __nesc_result;
-#line 147
-
-#line 147
-  __nesc_result = TossimActiveMessageC__AMPacket__type(amsg);
-#line 147
-
-#line 147
-  return __nesc_result;
-#line 147
-}
-#line 147
-# 65 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-static inline tossim_header_t *TossimActiveMessageC__getHeader(message_t *amsg)
-#line 65
-{
-  return (tossim_header_t *)(amsg->data - sizeof(tossim_header_t ));
-}
-
-#line 181
-static inline void TossimActiveMessageC__Packet__setPayloadLength(message_t *msg, uint8_t len)
-#line 181
-{
-  __nesc_hton_uint8(TossimActiveMessageC__getHeader(msg)->length.nxdata, len);
-}
-
-# 94 "../../tos/interfaces/Packet.nc"
-inline static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Packet__setPayloadLength(message_t * msg, uint8_t len){
-#line 94
-  TossimActiveMessageC__Packet__setPayloadLength(msg, len);
-#line 94
-}
-#line 94
-# 90 "../../tos/system/AMQueueImplP.nc"
-static inline error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__send(uint8_t clientId, message_t *msg, 
-uint8_t len)
-#line 91
-{
-  if (clientId >= 1) {
-      return FAIL;
-    }
-  if (/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][clientId].msg != (void *)0) {
-      return EBUSY;
-    }
-  sim_log_debug(116U, "AMQueue", "AMQueue: request to send from %hhu (%p): passed checks\n", clientId, msg);
-
-  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][clientId].msg = msg;
-  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Packet__setPayloadLength(msg, len);
-
-  if (/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] >= 1) {
-      error_t err;
-      am_id_t amId = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMPacket__type(msg);
-      am_addr_t dest = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMPacket__destination(msg);
-
-      sim_log_debug(117U, "AMQueue", "%s: request to send from %hhu (%p): queue empty\n", __FUNCTION__, clientId, msg);
-      /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] = clientId;
-
-      err = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__send(amId, dest, msg, len);
-      if (err != SUCCESS) {
-          sim_log_debug(118U, "AMQueue", "%s: underlying send failed.\n", __FUNCTION__);
-          /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] = 1;
-          /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][clientId].msg = (void *)0;
-        }
-
-      return err;
-    }
-  else {
-      sim_log_debug(119U, "AMQueue", "AMQueue: request to send from %hhu (%p): queue not empty\n", clientId, msg);
-    }
-  return SUCCESS;
-}
-
-# 75 "../../tos/interfaces/Send.nc"
-inline static error_t /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__Send__send(message_t * msg, uint8_t len){
-#line 75
-  unsigned char __nesc_result;
-#line 75
-
-#line 75
-  __nesc_result = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__send(0U, msg, len);
-#line 75
-
-#line 75
-  return __nesc_result;
-#line 75
-}
-#line 75
-# 170 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-static inline void TossimActiveMessageC__AMPacket__setType(message_t *amsg, am_id_t t)
-#line 170
-{
-  tossim_header_t *header = TossimActiveMessageC__getHeader(amsg);
-
-#line 172
-  __nesc_hton_uint8(header->type.nxdata, t);
-}
-
-# 162 "../../tos/interfaces/AMPacket.nc"
-inline static void /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__AMPacket__setType(message_t * amsg, am_id_t t){
-#line 162
-  TossimActiveMessageC__AMPacket__setType(amsg, t);
-#line 162
-}
-#line 162
-# 145 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-static inline void TossimActiveMessageC__AMPacket__setDestination(message_t *amsg, am_addr_t addr)
-#line 145
-{
-  tossim_header_t *header = TossimActiveMessageC__getHeader(amsg);
-
-#line 147
-  __nesc_hton_uint16(header->dest.nxdata, addr);
-}
-
-# 103 "../../tos/interfaces/AMPacket.nc"
-inline static void /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__AMPacket__setDestination(message_t * amsg, am_addr_t addr){
-#line 103
-  TossimActiveMessageC__AMPacket__setDestination(amsg, addr);
-#line 103
-}
-#line 103
-# 53 "../../tos/system/AMQueueEntryP.nc"
-static inline error_t /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__AMSend__send(am_addr_t dest, 
-message_t *msg, 
-uint8_t len)
-#line 55
-{
-  /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__AMPacket__setDestination(msg, dest);
-  /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__AMPacket__setType(msg, 6);
-  return /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__Send__send(msg, len);
-}
-
-# 80 "../../tos/interfaces/AMSend.nc"
-inline static error_t Tracker__AMSend__send(am_addr_t addr, message_t * msg, uint8_t len){
-#line 80
-  unsigned char __nesc_result;
-#line 80
-
-#line 80
-  __nesc_result = /*TrackingAppC.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP__0__AMSend__send(addr, msg, len);
-#line 80
-
-#line 80
-  return __nesc_result;
-#line 80
-}
-#line 80
-# 189 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-static inline void *TossimActiveMessageC__Packet__getPayload(message_t *msg, uint8_t len)
-#line 189
-{
-  if (len <= 28) {
-      return msg->data;
-    }
-  else {
-      return (void *)0;
-    }
-}
-
-# 126 "../../tos/interfaces/Packet.nc"
-inline static void * Tracker__Packet__getPayload(message_t * msg, uint8_t len){
-#line 126
-  void *__nesc_result;
-#line 126
-
-#line 126
-  __nesc_result = TossimActiveMessageC__Packet__getPayload(msg, len);
-#line 126
-
-#line 126
-  return __nesc_result;
-#line 126
-}
-#line 126
-# 201 "Tracker.nc"
+# 224 "Tracker.nc"
 static inline void Tracker__Timer__fired(void )
 {
-  if (!Tracker__busy[sim_node()]) {
-      TrackerMsg *btrpkt = (TrackerMsg *)Tracker__Packet__getPayload(&Tracker__pkt[sim_node()], sizeof(TrackerMsg ));
-
-#line 205
-      __nesc_hton_uint16(btrpkt->nodeid.nxdata, TOS_NODE_ID);
-      __nesc_hton_uint16(btrpkt->type.nxdata, DIST);
-      __nesc_hton_uint16(btrpkt->distance.nxdata, 3);
-      if (Tracker__AMSend__send(AM_BROADCAST_ADDR, &Tracker__pkt[sim_node()], sizeof(TrackerMsg )) == SUCCESS) {
-          sim_log_debug(108U, "Info", "Packet sent");
-          Tracker__busy[sim_node()] = TRUE;
-        }
-      else 
-#line 211
-        {
-          sim_log_debug(109U, "Info", "Couldn't send packet. Busy.");
-        }
-    }
 }
 
 # 204 "../../tos/lib/timer/VirtualizeTimerC.nc"
@@ -7288,9 +6836,9 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer
 }
 
 # 83 "../../tos/lib/timer/Timer.nc"
-inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__fired(uint8_t arg_0x2ae5becc22f8){
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__fired(uint8_t arg_0x2b5db4a042f8){
 #line 83
-  switch (arg_0x2ae5becc22f8) {
+  switch (arg_0x2b5db4a042f8) {
 #line 83
     case 0U:
 #line 83
@@ -7300,7 +6848,7 @@ inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer
 #line 83
     default:
 #line 83
-      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__default__fired(arg_0x2ae5becc22f8);
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer__default__fired(arg_0x2b5db4a042f8);
 #line 83
       break;
 #line 83
@@ -7308,6 +6856,396 @@ inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__Timer
 #line 83
 }
 #line 83
+# 139 "../../tos/lib/tossim/SimSchedulerBasicP.nc"
+static inline bool SimSchedulerBasicP__isWaiting(uint8_t id)
+{
+  return SimSchedulerBasicP__m_next[sim_node()][id] != SimSchedulerBasicP__NO_TASK || SimSchedulerBasicP__m_tail[sim_node()] == id;
+}
+
+static inline bool SimSchedulerBasicP__pushTask(uint8_t id)
+{
+  if (!SimSchedulerBasicP__isWaiting(id)) 
+    {
+      if (SimSchedulerBasicP__m_head[sim_node()] == SimSchedulerBasicP__NO_TASK) 
+        {
+          SimSchedulerBasicP__m_head[sim_node()] = id;
+          SimSchedulerBasicP__m_tail[sim_node()] = id;
+        }
+      else 
+        {
+          SimSchedulerBasicP__m_next[sim_node()][SimSchedulerBasicP__m_tail[sim_node()]] = id;
+          SimSchedulerBasicP__m_tail[sim_node()] = id;
+        }
+      return TRUE;
+    }
+  else 
+    {
+      return FALSE;
+    }
+}
+
+#line 69
+static inline int SimSchedulerBasicP__sim_config_task_latency(void )
+#line 69
+{
+#line 69
+  return 100;
+}
+
+# 54 "../../tos/chips/atm128/timer/HplAtm128Compare.nc"
+inline static void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__set(/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__size_type t){
+#line 54
+  HplAtm128Timer0AsyncP__Compare__set(t);
+#line 54
+}
+#line 54
+# 61 "../../tos/chips/atm128/timer/HplAtm128Timer.nc"
+inline static /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Timer__timer_size /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Timer__get(void ){
+#line 61
+  unsigned char __nesc_result;
+#line 61
+
+#line 61
+  __nesc_result = HplAtm128Timer0AsyncP__Timer0__get();
+#line 61
+
+#line 61
+  return __nesc_result;
+#line 61
+}
+#line 61
+# 569 "../../tos/chips/atm128/timer/sim/HplAtm128Timer0AsyncP.nc"
+static inline int HplAtm128Timer0AsyncP__TimerAsync__compareBusy(void )
+#line 569
+{
+  return (* (volatile uint8_t *)&atm128RegFile[sim_node()][0x30] & (1 << OCR0UB)) != 0;
+}
+
+# 44 "../../tos/chips/atm128/timer/HplAtm128TimerAsync.nc"
+inline static int /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__TimerAsync__compareBusy(void ){
+#line 44
+  int __nesc_result;
+#line 44
+
+#line 44
+  __nesc_result = HplAtm128Timer0AsyncP__TimerAsync__compareBusy();
+#line 44
+
+#line 44
+  return __nesc_result;
+#line 44
+}
+#line 44
+# 74 "../../tos/chips/atm128/timer/Atm128AlarmAsyncP.nc"
+static inline void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__setOcr0(uint8_t n)
+#line 74
+{
+  while (/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__TimerAsync__compareBusy()) 
+    ;
+  if (n == /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Timer__get()) {
+    n++;
+    }
+
+
+  if (/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__base[sim_node()] + n + 1 < /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__base[sim_node()]) {
+    n = -/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__base[sim_node()] - 1;
+    }
+#line 84
+  /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__set(n);
+}
+
+# 577 "../../tos/chips/atm128/timer/sim/HplAtm128Timer0AsyncP.nc"
+static inline void HplAtm128Timer0AsyncP__cancel_compare(void )
+#line 577
+{
+  sim_log_debug(148U, "HplAtm128CompareC", "Cancelling compare at 0x%p\n", HplAtm128Timer0AsyncP__compare[sim_node()]);
+  if (HplAtm128Timer0AsyncP__compare[sim_node()] != (void *)0) {
+      HplAtm128Timer0AsyncP__compare[sim_node()]->cancelled = 1;
+      HplAtm128Timer0AsyncP__compare[sim_node()]->cleanup = sim_queue_cleanup_total;
+    }
+}
+
+#line 116
+static inline void HplAtm128Timer0AsyncP__notify_changed(void )
+#line 116
+{
+  uint8_t newScale = HplAtm128Timer0AsyncP__Timer0__getScale();
+
+#line 118
+  if (newScale != AVR_CLOCK_OFF && 
+  HplAtm128Timer0AsyncP__oldScale[sim_node()] == AVR_CLOCK_OFF) {
+      HplAtm128Timer0AsyncP__lastZero[sim_node()] = sim_time();
+    }
+  HplAtm128Timer0AsyncP__oldScale[sim_node()] = newScale;
+
+  HplAtm128Timer0AsyncP__schedule_new_compare();
+}
+
+#line 545
+static inline void HplAtm128Timer0AsyncP__cancel_overflow(void )
+#line 545
+{
+  if (HplAtm128Timer0AsyncP__overflow[sim_node()] != (void *)0) {
+      HplAtm128Timer0AsyncP__overflow[sim_node()]->cancelled = 1;
+      sim_log_debug(147U, "HplAtm128Timer0AsyncP", "Cancelling overflow %p.\n", HplAtm128Timer0AsyncP__overflow[sim_node()]);
+      HplAtm128Timer0AsyncP__overflow[sim_node()]->cleanup = sim_queue_cleanup_total;
+    }
+}
+
+#line 481
+static inline void HplAtm128Timer0AsyncP__timer0_overflow_handle(sim_event_t *evt)
+#line 481
+{
+  if (evt->cancelled) {
+      return;
+    }
+  else {
+      if ((atm128RegFile[sim_node()][ATM128_TIMSK] & (1 << TOIE0)) != 0) {
+          atm128RegFile[sim_node()][ATM128_TIFR] &= ~(1 << TOV0);
+          sim_log_debug(144U, "HplAtm128Timer0AsyncP", "Overflow interrupt at %s\n", sim_time_string());
+          INTERRUPT_16();
+        }
+      else {
+          sim_log_debug(145U, "HplAtm128Timer0AsyncP", "Setting overflow bit at %s\n", sim_time_string());
+          atm128RegFile[sim_node()][ATM128_TIFR] |= 1 << TOV0;
+        }
+      HplAtm128Timer0AsyncP__configure_overflow(evt);
+      sim_queue_insert(evt);
+    }
+}
+
+static inline sim_event_t *HplAtm128Timer0AsyncP__allocate_overflow(void )
+#line 500
+{
+  sim_event_t *newEvent = sim_queue_allocate_event();
+
+  newEvent->handle = HplAtm128Timer0AsyncP__timer0_overflow_handle;
+  newEvent->cleanup = sim_queue_cleanup_none;
+  return newEvent;
+}
+
+#line 534
+static inline void HplAtm128Timer0AsyncP__schedule_new_overflow(void )
+#line 534
+{
+  sim_event_t *newEvent = HplAtm128Timer0AsyncP__allocate_overflow();
+
+#line 536
+  HplAtm128Timer0AsyncP__configure_overflow(newEvent);
+
+  if (HplAtm128Timer0AsyncP__overflow[sim_node()] != (void *)0) {
+      HplAtm128Timer0AsyncP__cancel_overflow();
+    }
+  HplAtm128Timer0AsyncP__overflow[sim_node()] = newEvent;
+  sim_queue_insert(newEvent);
+}
+
+#line 148
+static inline sim_time_t HplAtm128Timer0AsyncP__clock_to_sim(sim_time_t t)
+#line 148
+{
+  t *= sim_ticks_per_sec();
+  t /= HplAtm128Timer0AsyncP__notify_clockTicksPerSec();
+  return t;
+}
+
+#line 297
+static inline void HplAtm128Timer0AsyncP__Timer0__set(uint8_t newVal)
+#line 297
+{
+  uint8_t curVal = HplAtm128Timer0AsyncP__Timer0__get();
+
+#line 299
+  sim_log_debug(137U, "HplAtm128Timer0AsyncP", "HplAtm128Timer0AsyncP: Setting timer: %hhu\n", newVal);
+  if (newVal == curVal) {
+      return;
+    }
+  else {
+      sim_time_t adjustment = curVal - newVal;
+
+#line 305
+      adjustment = adjustment << HplAtm128Timer0AsyncP__shiftFromScale();
+      adjustment = HplAtm128Timer0AsyncP__clock_to_sim(adjustment);
+
+      if (newVal < curVal) {
+          HplAtm128Timer0AsyncP__lastZero[sim_node()] += adjustment;
+        }
+      else {
+          HplAtm128Timer0AsyncP__lastZero[sim_node()] -= adjustment;
+        }
+
+      HplAtm128Timer0AsyncP__schedule_new_overflow();
+      HplAtm128Timer0AsyncP__notify_changed();
+    }
+}
+
+#line 187
+static inline void HplAtm128Timer0AsyncP__timer0_compare_handle(sim_event_t *evt)
+#line 187
+{
+  sim_log_debug(127U, "HplAtm128Timer0AsyncP", "Beginning compare 0x%p at %s\n", evt, sim_time_string());
+  if (evt->cancelled) {
+      return;
+    }
+  else {
+      char timeStr[128];
+
+#line 194
+      sim_print_now(timeStr, 128);
+      sim_log_debug(128U, "HplAtm128Timer0AsyncP", "Handling compare at 0x%p @ %s\n", evt, sim_time_string());
+
+      if ((atm128RegFile[sim_node()][ATM128_TCCR0] & (1 << WGM01)) != 0 && !((atm128RegFile[sim_node()][ATM128_TCCR0] & (1 << WGM00)) != 0)) {
+          sim_log_debug(129U, "HplAtm128Timer0AsyncP", "%s: CTC is set, clear timer.\n", __FUNCTION__);
+          HplAtm128Timer0AsyncP__Timer0__set(0);
+        }
+      else {
+          sim_log_debug(130U, "HplAtm128Timer0AsyncP", "%s: TCCR is 0x%hhx, %i, %i\n", __FUNCTION__, * (volatile uint8_t *)&atm128RegFile[sim_node()][0x33], (int )((atm128RegFile[sim_node()][ATM128_TCCR0] & (1 << WGM01)) != 0), (int )((atm128RegFile[sim_node()][ATM128_TCCR0] & (1 << WGM00)) != 0));
+        }
+
+      if ((atm128RegFile[sim_node()][ATM128_TIMSK] & (1 << OCIE0)) != 0) {
+          sim_log_debug(131U, "HplAtm128Timer0AsyncP", "TIFR is %hhx\n", * (volatile uint8_t *)&atm128RegFile[sim_node()][0x36]);
+          atm128RegFile[sim_node()][ATM128_TIFR] &= ~(1 << OCF0);
+          sim_log_debug(132U, "HplAtm128Timer0AsyncP", "TIFR is %hhx\n", * (volatile uint8_t *)&atm128RegFile[sim_node()][0x36]);
+          sim_log_debug(133U, "HplAtm128Timer0AsyncP", "Compare interrupt @ %s\n", timeStr);
+          INTERRUPT_15();
+        }
+      else {
+          atm128RegFile[sim_node()][ATM128_TIFR] |= 1 << OCF0;
+        }
+
+      if (! evt->cancelled) {
+          HplAtm128Timer0AsyncP__configure_compare(evt);
+          sim_queue_insert(evt);
+        }
+    }
+}
+
+static inline sim_event_t *HplAtm128Timer0AsyncP__allocate_compare(void )
+#line 223
+{
+  sim_event_t *newEvent = sim_queue_allocate_event();
+
+#line 225
+  sim_log_debug(134U, "HplAtm128Timer0AsyncP", "Allocated compare at 0x%p\n", newEvent);
+  newEvent->handle = HplAtm128Timer0AsyncP__timer0_compare_handle;
+  newEvent->cleanup = sim_queue_cleanup_none;
+  return newEvent;
+}
+
+# 230 "../../tos/chips/atm128/timer/Atm128AlarmAsyncP.nc"
+static inline void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Timer__overflow(void )
+#line 230
+{
+}
+
+# 70 "../../tos/chips/atm128/timer/HplAtm128Timer.nc"
+inline static void HplAtm128Timer0AsyncP__Timer0__overflow(void ){
+#line 70
+  /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Timer__overflow();
+#line 70
+}
+#line 70
+# 58 "../../tos/lib/timer/CounterToLocalTimeC.nc"
+static inline void /*HilTimerMilliC.CounterToLocalTimeC*/CounterToLocalTimeC__0__Counter__overflow(void )
+{
+}
+
+# 82 "../../tos/lib/timer/Counter.nc"
+inline static void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Counter__overflow(void ){
+#line 82
+  /*HilTimerMilliC.CounterToLocalTimeC*/CounterToLocalTimeC__0__Counter__overflow();
+#line 82
+}
+#line 82
+# 85 "../../tos/chips/atm128/sim/atm128hardware.h"
+static __inline void __nesc_enable_interrupt()
+#line 85
+{
+  atm128RegFile[sim_node()][* (volatile uint8_t *)&atm128RegFile[sim_node()][0x3F]] |= 1 << 7;
+}
+
+# 48 "../../tos/chips/atm128/timer/HplAtm128Compare.nc"
+inline static /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__size_type /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__get(void ){
+#line 48
+  unsigned char __nesc_result;
+#line 48
+
+#line 48
+  __nesc_result = HplAtm128Timer0AsyncP__Compare__get();
+#line 48
+
+#line 48
+  return __nesc_result;
+#line 48
+}
+#line 48
+# 149 "../../tos/chips/atm128/timer/Atm128AlarmAsyncP.nc"
+static inline void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__fired(void )
+#line 149
+{
+  int overflowed;
+
+
+  /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__base[sim_node()] += /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__get() + 1U;
+  overflowed = !/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__base[sim_node()];
+  __nesc_enable_interrupt();
+  /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__setInterrupt();
+  if (overflowed) {
+    /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Counter__overflow();
+    }
+}
+
+# 58 "../../tos/chips/atm128/timer/HplAtm128Compare.nc"
+inline static void HplAtm128Timer0AsyncP__Compare__fired(void ){
+#line 58
+  /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__fired();
+#line 58
+}
+#line 58
+# 67 "../../tos/interfaces/TaskBasic.nc"
+inline static error_t /*HilTimerMilliC.AlarmToTimerC*/AlarmToTimerC__0__fired__postTask(void ){
+#line 67
+  unsigned char __nesc_result;
+#line 67
+
+#line 67
+  __nesc_result = SimSchedulerBasicP__TaskBasic__postTask(/*HilTimerMilliC.AlarmToTimerC*/AlarmToTimerC__0__fired);
+#line 67
+
+#line 67
+  return __nesc_result;
+#line 67
+}
+#line 67
+# 81 "../../tos/lib/timer/AlarmToTimerC.nc"
+static inline void /*HilTimerMilliC.AlarmToTimerC*/AlarmToTimerC__0__Alarm__fired(void )
+{
+#line 82
+  /*HilTimerMilliC.AlarmToTimerC*/AlarmToTimerC__0__fired__postTask();
+}
+
+# 78 "../../tos/lib/timer/Alarm.nc"
+inline static void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Alarm__fired(void ){
+#line 78
+  /*HilTimerMilliC.AlarmToTimerC*/AlarmToTimerC__0__Alarm__fired();
+#line 78
+}
+#line 78
+# 67 "../../tos/interfaces/TaskBasic.nc"
+inline static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__errorTask__postTask(void ){
+#line 67
+  unsigned char __nesc_result;
+#line 67
+
+#line 67
+  __nesc_result = SimSchedulerBasicP__TaskBasic__postTask(/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__errorTask);
+#line 67
+
+#line 67
+  return __nesc_result;
+#line 67
+}
+#line 67
 # 281 "/usr/lib/x86_64-linux-gnu/ncc/nesc_nx.h"
 static __inline  uint8_t __nesc_ntoh_uint8(const void * source)
 #line 281
@@ -7834,6 +7772,146 @@ inline static error_t TossimActiveMessageC__Model__send(int node, message_t *msg
 #line 57
 }
 #line 57
+# 65 "../../tos/lib/tossim/TossimActiveMessageC.nc"
+static inline tossim_header_t *TossimActiveMessageC__getHeader(message_t *amsg)
+#line 65
+{
+  return (tossim_header_t *)(amsg->data - sizeof(tossim_header_t ));
+}
+
+
+
+
+
+static inline error_t TossimActiveMessageC__AMSend__send(am_id_t id, am_addr_t addr, 
+message_t *amsg, 
+uint8_t len)
+#line 75
+{
+  error_t err;
+  tossim_header_t *header = TossimActiveMessageC__getHeader(amsg);
+
+#line 78
+  sim_log_debug(57U, "AM", "AM: Sending packet (id=%hhu, len=%hhu) to %hu\n", id, len, addr);
+  __nesc_hton_uint8(header->type.nxdata, id);
+  __nesc_hton_uint16(header->dest.nxdata, addr);
+  __nesc_hton_uint16(header->src.nxdata, TossimActiveMessageC__AMPacket__address());
+  __nesc_hton_uint8(header->length.nxdata, len);
+  err = TossimActiveMessageC__Model__send((int )addr, amsg, len + sizeof(tossim_header_t ) + sizeof(tossim_footer_t ));
+  return err;
+}
+
+# 80 "../../tos/interfaces/AMSend.nc"
+inline static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__send(am_id_t arg_0x2b5db4796020, am_addr_t addr, message_t * msg, uint8_t len){
+#line 80
+  unsigned char __nesc_result;
+#line 80
+
+#line 80
+  __nesc_result = TossimActiveMessageC__AMSend__send(arg_0x2b5db4796020, addr, msg, len);
+#line 80
+
+#line 80
+  return __nesc_result;
+#line 80
+}
+#line 80
+# 177 "../../tos/lib/tossim/TossimActiveMessageC.nc"
+static inline uint8_t TossimActiveMessageC__Packet__payloadLength(message_t *msg)
+#line 177
+{
+  return __nesc_ntoh_uint8(TossimActiveMessageC__getHeader(msg)->length.nxdata);
+}
+
+# 78 "../../tos/interfaces/Packet.nc"
+inline static uint8_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Packet__payloadLength(message_t * msg){
+#line 78
+  unsigned char __nesc_result;
+#line 78
+
+#line 78
+  __nesc_result = TossimActiveMessageC__Packet__payloadLength(msg);
+#line 78
+
+#line 78
+  return __nesc_result;
+#line 78
+}
+#line 78
+# 78 "../../tos/interfaces/AMPacket.nc"
+inline static am_addr_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMPacket__destination(message_t * amsg){
+#line 78
+  unsigned short __nesc_result;
+#line 78
+
+#line 78
+  __nesc_result = TossimActiveMessageC__AMPacket__destination(amsg);
+#line 78
+
+#line 78
+  return __nesc_result;
+#line 78
+}
+#line 78
+#line 147
+inline static am_id_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMPacket__type(message_t * amsg){
+#line 147
+  unsigned char __nesc_result;
+#line 147
+
+#line 147
+  __nesc_result = TossimActiveMessageC__AMPacket__type(amsg);
+#line 147
+
+#line 147
+  return __nesc_result;
+#line 147
+}
+#line 147
+# 65 "../../tos/system/AMQueueImplP.nc"
+static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__nextPacket(void )
+#line 65
+{
+  uint8_t i;
+
+#line 67
+  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] = (/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] + 1) % 1;
+  for (i = 0; i < 1; i++) {
+      if (/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()]].msg == (void *)0 || 
+      /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__cancelMask[sim_node()][/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] / 8] & (1 << /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] % 8)) 
+        {
+          /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] = (/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] + 1) % 1;
+        }
+      else {
+          break;
+        }
+    }
+  if (i >= 1) {
+#line 78
+    /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] = 1;
+    }
+}
+
+#line 174
+static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__tryToSend(void )
+#line 174
+{
+  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__nextPacket();
+  if (/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] < 1) {
+      error_t nextErr;
+      message_t *nextMsg = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()]].msg;
+      am_id_t nextId = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMPacket__type(nextMsg);
+      am_addr_t nextDest = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMPacket__destination(nextMsg);
+      uint8_t len = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Packet__payloadLength(nextMsg);
+
+#line 182
+      nextErr = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__send(nextId, nextDest, nextMsg, len);
+      if (nextErr != SUCCESS) {
+          /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__errorTask__postTask();
+        }
+    }
+}
+
 # 95 "../../tos/lib/tossim/CpmModelC.nc"
 static inline double CpmModelC__timeInMs(void )
 #line 95
@@ -7884,103 +7962,6 @@ static inline uint8_t SimMoteP__SimMote__getRadioChannel(void )
     }
 
   return SimMoteP__radioChannel[sim_node()];
-}
-
-# 65 "../../tos/system/AMQueueImplP.nc"
-static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__nextPacket(void )
-#line 65
-{
-  uint8_t i;
-
-#line 67
-  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] = (/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] + 1) % 1;
-  for (i = 0; i < 1; i++) {
-      if (/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()]].msg == (void *)0 || 
-      /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__cancelMask[sim_node()][/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] / 8] & (1 << /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] % 8)) 
-        {
-          /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] = (/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] + 1) % 1;
-        }
-      else {
-          break;
-        }
-    }
-  if (i >= 1) {
-#line 78
-    /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] = 1;
-    }
-}
-
-# 177 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-static inline uint8_t TossimActiveMessageC__Packet__payloadLength(message_t *msg)
-#line 177
-{
-  return __nesc_ntoh_uint8(TossimActiveMessageC__getHeader(msg)->length.nxdata);
-}
-
-# 78 "../../tos/interfaces/Packet.nc"
-inline static uint8_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Packet__payloadLength(message_t * msg){
-#line 78
-  unsigned char __nesc_result;
-#line 78
-
-#line 78
-  __nesc_result = TossimActiveMessageC__Packet__payloadLength(msg);
-#line 78
-
-#line 78
-  return __nesc_result;
-#line 78
-}
-#line 78
-# 67 "../../tos/interfaces/TaskBasic.nc"
-inline static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__errorTask__postTask(void ){
-#line 67
-  unsigned char __nesc_result;
-#line 67
-
-#line 67
-  __nesc_result = SimSchedulerBasicP__TaskBasic__postTask(/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__errorTask);
-#line 67
-
-#line 67
-  return __nesc_result;
-#line 67
-}
-#line 67
-# 139 "../../tos/lib/tossim/SimSchedulerBasicP.nc"
-static inline bool SimSchedulerBasicP__isWaiting(uint8_t id)
-{
-  return SimSchedulerBasicP__m_next[sim_node()][id] != SimSchedulerBasicP__NO_TASK || SimSchedulerBasicP__m_tail[sim_node()] == id;
-}
-
-static inline bool SimSchedulerBasicP__pushTask(uint8_t id)
-{
-  if (!SimSchedulerBasicP__isWaiting(id)) 
-    {
-      if (SimSchedulerBasicP__m_head[sim_node()] == SimSchedulerBasicP__NO_TASK) 
-        {
-          SimSchedulerBasicP__m_head[sim_node()] = id;
-          SimSchedulerBasicP__m_tail[sim_node()] = id;
-        }
-      else 
-        {
-          SimSchedulerBasicP__m_next[sim_node()][SimSchedulerBasicP__m_tail[sim_node()]] = id;
-          SimSchedulerBasicP__m_tail[sim_node()] = id;
-        }
-      return TRUE;
-    }
-  else 
-    {
-      return FALSE;
-    }
-}
-
-#line 69
-static inline int SimSchedulerBasicP__sim_config_task_latency(void )
-#line 69
-{
-#line 69
-  return 100;
 }
 
 # 235 "../../tos/lib/tossim/CpmModelC.nc"
@@ -8135,345 +8116,6 @@ static inline void CpmModelC__sim_gain_ack_handle(sim_event_t *evt)
   CpmModelC__free_receive_message((CpmModelC__receive_message_t *)evt->data);
 }
 
-# 54 "../../tos/chips/atm128/timer/HplAtm128Compare.nc"
-inline static void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__set(/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__size_type t){
-#line 54
-  HplAtm128Timer0AsyncP__Compare__set(t);
-#line 54
-}
-#line 54
-# 61 "../../tos/chips/atm128/timer/HplAtm128Timer.nc"
-inline static /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Timer__timer_size /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Timer__get(void ){
-#line 61
-  unsigned char __nesc_result;
-#line 61
-
-#line 61
-  __nesc_result = HplAtm128Timer0AsyncP__Timer0__get();
-#line 61
-
-#line 61
-  return __nesc_result;
-#line 61
-}
-#line 61
-# 569 "../../tos/chips/atm128/timer/sim/HplAtm128Timer0AsyncP.nc"
-static inline int HplAtm128Timer0AsyncP__TimerAsync__compareBusy(void )
-#line 569
-{
-  return (* (volatile uint8_t *)&atm128RegFile[sim_node()][0x30] & (1 << OCR0UB)) != 0;
-}
-
-# 44 "../../tos/chips/atm128/timer/HplAtm128TimerAsync.nc"
-inline static int /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__TimerAsync__compareBusy(void ){
-#line 44
-  int __nesc_result;
-#line 44
-
-#line 44
-  __nesc_result = HplAtm128Timer0AsyncP__TimerAsync__compareBusy();
-#line 44
-
-#line 44
-  return __nesc_result;
-#line 44
-}
-#line 44
-# 74 "../../tos/chips/atm128/timer/Atm128AlarmAsyncP.nc"
-static inline void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__setOcr0(uint8_t n)
-#line 74
-{
-  while (/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__TimerAsync__compareBusy()) 
-    ;
-  if (n == /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Timer__get()) {
-    n++;
-    }
-
-
-  if (/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__base[sim_node()] + n + 1 < /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__base[sim_node()]) {
-    n = -/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__base[sim_node()] - 1;
-    }
-#line 84
-  /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__set(n);
-}
-
-# 577 "../../tos/chips/atm128/timer/sim/HplAtm128Timer0AsyncP.nc"
-static inline void HplAtm128Timer0AsyncP__cancel_compare(void )
-#line 577
-{
-  sim_log_debug(147U, "HplAtm128CompareC", "Cancelling compare at 0x%p\n", HplAtm128Timer0AsyncP__compare[sim_node()]);
-  if (HplAtm128Timer0AsyncP__compare[sim_node()] != (void *)0) {
-      HplAtm128Timer0AsyncP__compare[sim_node()]->cancelled = 1;
-      HplAtm128Timer0AsyncP__compare[sim_node()]->cleanup = sim_queue_cleanup_total;
-    }
-}
-
-#line 116
-static inline void HplAtm128Timer0AsyncP__notify_changed(void )
-#line 116
-{
-  uint8_t newScale = HplAtm128Timer0AsyncP__Timer0__getScale();
-
-#line 118
-  if (newScale != AVR_CLOCK_OFF && 
-  HplAtm128Timer0AsyncP__oldScale[sim_node()] == AVR_CLOCK_OFF) {
-      HplAtm128Timer0AsyncP__lastZero[sim_node()] = sim_time();
-    }
-  HplAtm128Timer0AsyncP__oldScale[sim_node()] = newScale;
-
-  HplAtm128Timer0AsyncP__schedule_new_compare();
-}
-
-#line 545
-static inline void HplAtm128Timer0AsyncP__cancel_overflow(void )
-#line 545
-{
-  if (HplAtm128Timer0AsyncP__overflow[sim_node()] != (void *)0) {
-      HplAtm128Timer0AsyncP__overflow[sim_node()]->cancelled = 1;
-      sim_log_debug(146U, "HplAtm128Timer0AsyncP", "Cancelling overflow %p.\n", HplAtm128Timer0AsyncP__overflow[sim_node()]);
-      HplAtm128Timer0AsyncP__overflow[sim_node()]->cleanup = sim_queue_cleanup_total;
-    }
-}
-
-#line 481
-static inline void HplAtm128Timer0AsyncP__timer0_overflow_handle(sim_event_t *evt)
-#line 481
-{
-  if (evt->cancelled) {
-      return;
-    }
-  else {
-      if ((atm128RegFile[sim_node()][ATM128_TIMSK] & (1 << TOIE0)) != 0) {
-          atm128RegFile[sim_node()][ATM128_TIFR] &= ~(1 << TOV0);
-          sim_log_debug(143U, "HplAtm128Timer0AsyncP", "Overflow interrupt at %s\n", sim_time_string());
-          INTERRUPT_16();
-        }
-      else {
-          sim_log_debug(144U, "HplAtm128Timer0AsyncP", "Setting overflow bit at %s\n", sim_time_string());
-          atm128RegFile[sim_node()][ATM128_TIFR] |= 1 << TOV0;
-        }
-      HplAtm128Timer0AsyncP__configure_overflow(evt);
-      sim_queue_insert(evt);
-    }
-}
-
-static inline sim_event_t *HplAtm128Timer0AsyncP__allocate_overflow(void )
-#line 500
-{
-  sim_event_t *newEvent = sim_queue_allocate_event();
-
-  newEvent->handle = HplAtm128Timer0AsyncP__timer0_overflow_handle;
-  newEvent->cleanup = sim_queue_cleanup_none;
-  return newEvent;
-}
-
-#line 534
-static inline void HplAtm128Timer0AsyncP__schedule_new_overflow(void )
-#line 534
-{
-  sim_event_t *newEvent = HplAtm128Timer0AsyncP__allocate_overflow();
-
-#line 536
-  HplAtm128Timer0AsyncP__configure_overflow(newEvent);
-
-  if (HplAtm128Timer0AsyncP__overflow[sim_node()] != (void *)0) {
-      HplAtm128Timer0AsyncP__cancel_overflow();
-    }
-  HplAtm128Timer0AsyncP__overflow[sim_node()] = newEvent;
-  sim_queue_insert(newEvent);
-}
-
-#line 148
-static inline sim_time_t HplAtm128Timer0AsyncP__clock_to_sim(sim_time_t t)
-#line 148
-{
-  t *= sim_ticks_per_sec();
-  t /= HplAtm128Timer0AsyncP__notify_clockTicksPerSec();
-  return t;
-}
-
-#line 297
-static inline void HplAtm128Timer0AsyncP__Timer0__set(uint8_t newVal)
-#line 297
-{
-  uint8_t curVal = HplAtm128Timer0AsyncP__Timer0__get();
-
-#line 299
-  sim_log_debug(136U, "HplAtm128Timer0AsyncP", "HplAtm128Timer0AsyncP: Setting timer: %hhu\n", newVal);
-  if (newVal == curVal) {
-      return;
-    }
-  else {
-      sim_time_t adjustment = curVal - newVal;
-
-#line 305
-      adjustment = adjustment << HplAtm128Timer0AsyncP__shiftFromScale();
-      adjustment = HplAtm128Timer0AsyncP__clock_to_sim(adjustment);
-
-      if (newVal < curVal) {
-          HplAtm128Timer0AsyncP__lastZero[sim_node()] += adjustment;
-        }
-      else {
-          HplAtm128Timer0AsyncP__lastZero[sim_node()] -= adjustment;
-        }
-
-      HplAtm128Timer0AsyncP__schedule_new_overflow();
-      HplAtm128Timer0AsyncP__notify_changed();
-    }
-}
-
-#line 187
-static inline void HplAtm128Timer0AsyncP__timer0_compare_handle(sim_event_t *evt)
-#line 187
-{
-  sim_log_debug(126U, "HplAtm128Timer0AsyncP", "Beginning compare 0x%p at %s\n", evt, sim_time_string());
-  if (evt->cancelled) {
-      return;
-    }
-  else {
-      char timeStr[128];
-
-#line 194
-      sim_print_now(timeStr, 128);
-      sim_log_debug(127U, "HplAtm128Timer0AsyncP", "Handling compare at 0x%p @ %s\n", evt, sim_time_string());
-
-      if ((atm128RegFile[sim_node()][ATM128_TCCR0] & (1 << WGM01)) != 0 && !((atm128RegFile[sim_node()][ATM128_TCCR0] & (1 << WGM00)) != 0)) {
-          sim_log_debug(128U, "HplAtm128Timer0AsyncP", "%s: CTC is set, clear timer.\n", __FUNCTION__);
-          HplAtm128Timer0AsyncP__Timer0__set(0);
-        }
-      else {
-          sim_log_debug(129U, "HplAtm128Timer0AsyncP", "%s: TCCR is 0x%hhx, %i, %i\n", __FUNCTION__, * (volatile uint8_t *)&atm128RegFile[sim_node()][0x33], (int )((atm128RegFile[sim_node()][ATM128_TCCR0] & (1 << WGM01)) != 0), (int )((atm128RegFile[sim_node()][ATM128_TCCR0] & (1 << WGM00)) != 0));
-        }
-
-      if ((atm128RegFile[sim_node()][ATM128_TIMSK] & (1 << OCIE0)) != 0) {
-          sim_log_debug(130U, "HplAtm128Timer0AsyncP", "TIFR is %hhx\n", * (volatile uint8_t *)&atm128RegFile[sim_node()][0x36]);
-          atm128RegFile[sim_node()][ATM128_TIFR] &= ~(1 << OCF0);
-          sim_log_debug(131U, "HplAtm128Timer0AsyncP", "TIFR is %hhx\n", * (volatile uint8_t *)&atm128RegFile[sim_node()][0x36]);
-          sim_log_debug(132U, "HplAtm128Timer0AsyncP", "Compare interrupt @ %s\n", timeStr);
-          INTERRUPT_15();
-        }
-      else {
-          atm128RegFile[sim_node()][ATM128_TIFR] |= 1 << OCF0;
-        }
-
-      if (! evt->cancelled) {
-          HplAtm128Timer0AsyncP__configure_compare(evt);
-          sim_queue_insert(evt);
-        }
-    }
-}
-
-static inline sim_event_t *HplAtm128Timer0AsyncP__allocate_compare(void )
-#line 223
-{
-  sim_event_t *newEvent = sim_queue_allocate_event();
-
-#line 225
-  sim_log_debug(133U, "HplAtm128Timer0AsyncP", "Allocated compare at 0x%p\n", newEvent);
-  newEvent->handle = HplAtm128Timer0AsyncP__timer0_compare_handle;
-  newEvent->cleanup = sim_queue_cleanup_none;
-  return newEvent;
-}
-
-# 230 "../../tos/chips/atm128/timer/Atm128AlarmAsyncP.nc"
-static inline void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Timer__overflow(void )
-#line 230
-{
-}
-
-# 70 "../../tos/chips/atm128/timer/HplAtm128Timer.nc"
-inline static void HplAtm128Timer0AsyncP__Timer0__overflow(void ){
-#line 70
-  /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Timer__overflow();
-#line 70
-}
-#line 70
-# 58 "../../tos/lib/timer/CounterToLocalTimeC.nc"
-static inline void /*HilTimerMilliC.CounterToLocalTimeC*/CounterToLocalTimeC__0__Counter__overflow(void )
-{
-}
-
-# 82 "../../tos/lib/timer/Counter.nc"
-inline static void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Counter__overflow(void ){
-#line 82
-  /*HilTimerMilliC.CounterToLocalTimeC*/CounterToLocalTimeC__0__Counter__overflow();
-#line 82
-}
-#line 82
-# 85 "../../tos/chips/atm128/sim/atm128hardware.h"
-static __inline void __nesc_enable_interrupt()
-#line 85
-{
-  atm128RegFile[sim_node()][* (volatile uint8_t *)&atm128RegFile[sim_node()][0x3F]] |= 1 << 7;
-}
-
-# 48 "../../tos/chips/atm128/timer/HplAtm128Compare.nc"
-inline static /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__size_type /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__get(void ){
-#line 48
-  unsigned char __nesc_result;
-#line 48
-
-#line 48
-  __nesc_result = HplAtm128Timer0AsyncP__Compare__get();
-#line 48
-
-#line 48
-  return __nesc_result;
-#line 48
-}
-#line 48
-# 149 "../../tos/chips/atm128/timer/Atm128AlarmAsyncP.nc"
-static inline void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__fired(void )
-#line 149
-{
-  int overflowed;
-
-
-  /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__base[sim_node()] += /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__get() + 1U;
-  overflowed = !/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__base[sim_node()];
-  __nesc_enable_interrupt();
-  /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__setInterrupt();
-  if (overflowed) {
-    /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Counter__overflow();
-    }
-}
-
-# 58 "../../tos/chips/atm128/timer/HplAtm128Compare.nc"
-inline static void HplAtm128Timer0AsyncP__Compare__fired(void ){
-#line 58
-  /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__fired();
-#line 58
-}
-#line 58
-# 67 "../../tos/interfaces/TaskBasic.nc"
-inline static error_t /*HilTimerMilliC.AlarmToTimerC*/AlarmToTimerC__0__fired__postTask(void ){
-#line 67
-  unsigned char __nesc_result;
-#line 67
-
-#line 67
-  __nesc_result = SimSchedulerBasicP__TaskBasic__postTask(/*HilTimerMilliC.AlarmToTimerC*/AlarmToTimerC__0__fired);
-#line 67
-
-#line 67
-  return __nesc_result;
-#line 67
-}
-#line 67
-# 81 "../../tos/lib/timer/AlarmToTimerC.nc"
-static inline void /*HilTimerMilliC.AlarmToTimerC*/AlarmToTimerC__0__Alarm__fired(void )
-{
-#line 82
-  /*HilTimerMilliC.AlarmToTimerC*/AlarmToTimerC__0__fired__postTask();
-}
-
-# 78 "../../tos/lib/timer/Alarm.nc"
-inline static void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Alarm__fired(void ){
-#line 78
-  /*HilTimerMilliC.AlarmToTimerC*/AlarmToTimerC__0__Alarm__fired();
-#line 78
-}
-#line 78
 # 67 "../../tos/interfaces/TaskBasic.nc"
 inline static error_t TossimPacketModelC__startDoneTask__postTask(void ){
 #line 67
@@ -8569,7 +8211,7 @@ inline static void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm
 static inline void HplAtm128Timer0AsyncP__Timer0Ctrl__setControl(Atm128TimerControl_t x)
 #line 364
 {
-  sim_log_debug(138U, "HplAtm128Timer0AsyncP", "Setting control to be 0x%hhx\n", x.flat);
+  sim_log_debug(139U, "HplAtm128Timer0AsyncP", "Setting control to be 0x%hhx\n", x.flat);
   * (volatile uint8_t *)&atm128RegFile[sim_node()][0x33] = x.flat;
 }
 
@@ -8671,10 +8313,10 @@ inline static void Tracker__Timer__startPeriodic(uint32_t dt){
 #line 64
 }
 #line 64
-# 193 "Tracker.nc"
+# 216 "Tracker.nc"
 static inline void Tracker__Boot__booted(void )
 {
-  sim_log_debug(107U, "Boot", "%d booted", TOS_NODE_ID);
+  sim_log_debug(109U, "Boot", "%d booted", TOS_NODE_ID);
   Tracker__AMControl__start();
   Tracker__Timer__startPeriodic(250);
   srand(time((void *)0));
@@ -10265,94 +9907,6 @@ static am_id_t TossimActiveMessageC__AMPacket__type(message_t *amsg)
   return __nesc_ntoh_uint8(header->type.nxdata);
 }
 
-# 131 "Tracker.nc"
-static void Tracker__multiplyMatrices(float firstMatrix[][25], float secondMatrix[][25], float mult[][25], int rowFirst, int columnFirst, int rowSecond, int columnSecond)
-#line 131
-{
-
-  int i;
-#line 133
-  int j;
-#line 133
-  int k;
-
-
-  for (i = 0; i < rowFirst; ++i) 
-    {
-      for (j = 0; j < columnSecond; ++j) 
-        {
-          mult[i][j] = 0;
-        }
-    }
-
-
-  for (i = 0; i < rowFirst; ++i) 
-    {
-      for (j = 0; j < columnSecond; ++j) 
-        {
-          for (k = 0; k < columnFirst; ++k) 
-            {
-              mult[i][j] += firstMatrix[i][k] * secondMatrix[k][j];
-            }
-        }
-    }
-}
-
-#line 36
-static float Tracker__determinant(float a[25][25], float k)
-{
-  float s = 1;
-#line 38
-  float det = 0;
-#line 38
-  float b[25][25];
-  int i;
-#line 39
-  int j;
-#line 39
-  int m;
-#line 39
-  int n;
-#line 39
-  int c;
-
-#line 40
-  if (k == 1) 
-    {
-      return a[0][0];
-    }
-  else 
-    {
-      det = 0;
-      for (c = 0; c < k; c++) 
-        {
-          m = 0;
-          n = 0;
-          for (i = 0; i < k; i++) 
-            {
-              for (j = 0; j < k; j++) 
-                {
-                  b[i][j] = 0;
-                  if (i != 0 && j != c) 
-                    {
-                      b[m][n] = a[i][j];
-                      if (n < k - 2) {
-                        n++;
-                        }
-                      else {
-                          n = 0;
-                          m++;
-                        }
-                    }
-                }
-            }
-          det = det + s * (a[0][c] * Tracker__determinant(b, k - 1));
-          s = -1 * s;
-        }
-    }
-  return det;
-}
-
 # 110 "../../tos/lib/tossim/sim_packet.c"
   uint8_t sim_packet_max_length(sim_packet_t *msg)
 #line 110
@@ -10513,7 +10067,7 @@ static uint8_t HplAtm128Timer0AsyncP__Timer0__get(void )
   elapsed = HplAtm128Timer0AsyncP__sim_to_clock(elapsed);
   elapsed = elapsed >> HplAtm128Timer0AsyncP__shiftFromScale();
   rval = (uint8_t )(elapsed & 0xff);
-  sim_log_debug(135U, "HplAtm128Timer0AsyncP", "HplAtm128Timer0AsyncP: Getting timer: %hhu\n", rval);
+  sim_log_debug(136U, "HplAtm128Timer0AsyncP", "HplAtm128Timer0AsyncP: Getting timer: %hhu\n", rval);
   return rval;
 }
 
@@ -10592,7 +10146,7 @@ static Atm128_TIFR_t HplAtm128Timer0AsyncP__Timer0Ctrl__getInterruptFlag(void )
 static uint8_t HplAtm128Timer0AsyncP__Compare__get(void )
 #line 457
 {
-  sim_log_debug(141U, "HplAtm128Timer0AsyncP", "HplAtm128Timer0AsyncP: Getting compare: %hhu\n", * (volatile uint8_t *)&atm128RegFile[sim_node()][0x31]);
+  sim_log_debug(142U, "HplAtm128Timer0AsyncP", "HplAtm128Timer0AsyncP: Getting compare: %hhu\n", * (volatile uint8_t *)&atm128RegFile[sim_node()][0x31]);
   return * (volatile uint8_t *)&atm128RegFile[sim_node()][0x31];
 }
 
@@ -10626,23 +10180,280 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__fireTimers(u
   /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC__0__updateFromTimer__postTask();
 }
 
-# 73 "../../tos/lib/tossim/TossimActiveMessageC.nc"
-static error_t TossimActiveMessageC__AMSend__send(am_id_t id, am_addr_t addr, 
-message_t *amsg, 
-uint8_t len)
-#line 75
+# 205 "../../tos/lib/tossim/SimSchedulerBasicP.nc"
+static error_t SimSchedulerBasicP__TaskBasic__postTask(uint8_t id)
 {
-  error_t err;
-  tossim_header_t *header = TossimActiveMessageC__getHeader(amsg);
+  error_t result;
 
-#line 78
-  sim_log_debug(57U, "AM", "AM: Sending packet (id=%hhu, len=%hhu) to %hu\n", id, len, addr);
-  __nesc_hton_uint8(header->type.nxdata, id);
-  __nesc_hton_uint16(header->dest.nxdata, addr);
-  __nesc_hton_uint16(header->src.nxdata, TossimActiveMessageC__AMPacket__address());
-  __nesc_hton_uint8(header->length.nxdata, len);
-  err = TossimActiveMessageC__Model__send((int )addr, amsg, len + sizeof(tossim_header_t ) + sizeof(tossim_footer_t ));
-  return err;
+#line 208
+  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
+#line 208
+    {
+      result = SimSchedulerBasicP__pushTask(id) ? SUCCESS : EBUSY;
+    }
+#line 210
+    __nesc_atomic_end(__nesc_atomic); }
+  if (result == SUCCESS) {
+      sim_log_debug(51U, "Scheduler", "Posting task %hhu.\n", id);
+      SimSchedulerBasicP__sim_scheduler_submit_event();
+    }
+  else {
+      sim_log_debug(52U, "Scheduler", "Posting task %hhu, but already posted.\n", id);
+    }
+  return result;
+}
+
+#line 77
+static void SimSchedulerBasicP__sim_scheduler_submit_event(void )
+#line 77
+{
+  if (SimSchedulerBasicP__sim_scheduler_event_pending[sim_node()] == FALSE) {
+      SimSchedulerBasicP__sim_scheduler_event[sim_node()].time = sim_time() + SimSchedulerBasicP__sim_config_task_latency();
+      sim_queue_insert(&SimSchedulerBasicP__sim_scheduler_event[sim_node()]);
+      SimSchedulerBasicP__sim_scheduler_event_pending[sim_node()] = TRUE;
+    }
+}
+
+# 212 "../../tos/chips/atm128/timer/Atm128AlarmAsyncP.nc"
+static void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Alarm__startAt(uint32_t nt0, uint32_t ndt)
+#line 212
+{
+  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
+    {
+      /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__set[sim_node()] = TRUE;
+      /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__t0[sim_node()] = nt0;
+      /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__dt[sim_node()] = ndt;
+    }
+#line 218
+    __nesc_atomic_end(__nesc_atomic); }
+  /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__setInterrupt();
+}
+
+#line 90
+static void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__setInterrupt(void )
+#line 90
+{
+  bool fired = FALSE;
+
+  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
+    {
+
+
+
+      uint8_t interrupt_in = 1 + /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__get() - /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Timer__get();
+      uint8_t newOcr0;
+      uint8_t tifr = (uint8_t )/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__TimerCtrl__getInterruptFlag().flat;
+
+#line 101
+      sim_log_debug(122U, "Atm128AlarmAsyncP", "Atm128AlarmAsyncP: TIFR is %hhx\n", tifr);
+      if ((interrupt_in != 0 && interrupt_in < /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MINDT) || tifr & (1 << OCF0)) {
+          if (interrupt_in < /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MINDT) {
+              sim_log_debug(123U, "Atm128AlarmAsyncP", "Atm128AlarmAsyncP: under min: %hhu.\n", interrupt_in);
+            }
+          else {
+              sim_log_debug(124U, "Atm128AlarmAsyncP", "Atm128AlarmAsyncP: OCF set.\n");
+            }
+          {
+#line 109
+            __nesc_atomic_end(__nesc_atomic); 
+#line 109
+            return;
+          }
+        }
+
+      if (!/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__set[sim_node()]) {
+          newOcr0 = /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MAXT;
+          sim_log_debug(125U, "Atm128AlarmAsyncP", "Atm128AlarmAsyncP: no alarm set, set at max.\n");
+        }
+      else 
+        {
+          uint32_t now = /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Counter__get();
+
+#line 120
+          sim_log_debug(126U, "Atm128AlarmAsyncP", "Atm128AlarmAsyncP: now-t0 = %llu, dt = %llu\n", now - /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__t0[sim_node()], /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__dt[sim_node()]);
+
+          if ((uint32_t )(now - /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__t0[sim_node()]) >= /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__dt[sim_node()]) 
+            {
+              /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__set[sim_node()] = FALSE;
+              fired = TRUE;
+              newOcr0 = /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MAXT;
+            }
+          else 
+            {
+
+
+              uint32_t alarm_in = /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__t0[sim_node()] + /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__dt[sim_node()] - /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__base[sim_node()];
+
+              if (alarm_in > /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MAXT) {
+                newOcr0 = /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MAXT;
+                }
+              else {
+#line 136
+                if ((uint8_t )alarm_in < /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MINDT) {
+                  newOcr0 = /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MINDT;
+                  }
+                else {
+#line 139
+                  newOcr0 = alarm_in;
+                  }
+                }
+            }
+        }
+#line 142
+      newOcr0--;
+      /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__setOcr0(newOcr0);
+    }
+#line 144
+    __nesc_atomic_end(__nesc_atomic); }
+  if (fired) {
+    /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Alarm__fired();
+    }
+}
+
+# 463 "../../tos/chips/atm128/timer/sim/HplAtm128Timer0AsyncP.nc"
+static void HplAtm128Timer0AsyncP__Compare__set(uint8_t t)
+#line 463
+{
+  sim_log_debug(143U, "HplAtm128Timer0AsyncP", "HplAtm128Timer0AsyncP: Setting compare: %hhu\n", t);
+  /* atomic removed: atomic calls only */
+#line 465
+  {
+
+
+
+
+    if (t == 0 || t >= 0xfe) {
+      t = 1;
+      }
+    if (t != * (volatile uint8_t *)&atm128RegFile[sim_node()][0x31]) {
+        * (volatile uint8_t *)&atm128RegFile[sim_node()][0x31] = t;
+        HplAtm128Timer0AsyncP__schedule_new_compare();
+      }
+  }
+}
+
+#line 267
+static void HplAtm128Timer0AsyncP__schedule_new_compare(void )
+#line 267
+{
+  if (HplAtm128Timer0AsyncP__compare[sim_node()] != (void *)0) {
+      HplAtm128Timer0AsyncP__cancel_compare();
+    }
+  if (HplAtm128Timer0AsyncP__Timer0__getScale() != AVR_CLOCK_OFF) {
+      sim_event_t *newEvent = HplAtm128Timer0AsyncP__allocate_compare();
+
+#line 273
+      HplAtm128Timer0AsyncP__configure_compare(newEvent);
+
+      HplAtm128Timer0AsyncP__compare[sim_node()] = newEvent;
+      sim_queue_insert(newEvent);
+    }
+}
+
+# 97 "../../tos/lib/tossim/sim_event_queue.c"
+static sim_event_t *sim_queue_allocate_event()
+#line 97
+{
+  sim_event_t *evt = (sim_event_t *)malloc(sizeof(sim_event_t ));
+
+#line 99
+  memset(evt, 0, sizeof(sim_event_t ));
+  evt->mote = sim_node();
+  return evt;
+}
+
+# 100 "../../tos/chips/atm128/timer/sim/HplAtm128Timer0AsyncP.nc"
+  void INTERRUPT_16(void )
+#line 100
+{
+  HplAtm128Timer0AsyncP__inOverflow[sim_node()] = TRUE;
+  HplAtm128Timer0AsyncP__Timer0__overflow();
+  HplAtm128Timer0AsyncP__inOverflow[sim_node()] = FALSE;
+}
+
+#line 508
+static void HplAtm128Timer0AsyncP__configure_overflow(sim_event_t *evt)
+#line 508
+{
+  sim_time_t overflowTime = 0;
+  uint8_t timerVal = HplAtm128Timer0AsyncP__Timer0__get();
+  uint8_t overflowVal = 0;
+
+
+
+
+  overflowTime = (overflowVal - timerVal) & 0xff;
+  if (overflowTime == 0) {
+      overflowTime = 256;
+    }
+
+
+
+
+  overflowTime = overflowTime << HplAtm128Timer0AsyncP__shiftFromScale();
+  overflowTime = HplAtm128Timer0AsyncP__clock_to_sim(overflowTime);
+  overflowTime += sim_time();
+  overflowTime -= (sim_time() - HplAtm128Timer0AsyncP__last_zero()) % (1 << HplAtm128Timer0AsyncP__shiftFromScale());
+
+  sim_log_debug(146U, "HplAtm128Timer0AsyncP", "Scheduling new overflow for %i at time %llu\n", sim_node(), overflowTime);
+
+  evt->time = overflowTime;
+}
+
+#line 94
+  void INTERRUPT_15(void )
+#line 94
+{
+
+  HplAtm128Timer0AsyncP__Compare__fired();
+}
+
+#line 231
+static void HplAtm128Timer0AsyncP__configure_compare(sim_event_t *evt)
+#line 231
+{
+  sim_time_t compareTime = 0;
+  sim_time_t phaseOffset = 0;
+  uint8_t timerVal = HplAtm128Timer0AsyncP__Timer0__get();
+  uint8_t compareVal = HplAtm128Timer0AsyncP__Compare__get();
+
+
+
+
+  compareTime = (compareVal - timerVal) & 0xff;
+  if (compareTime == 0) {
+      compareTime = 256;
+    }
+
+
+
+
+
+
+  compareTime = (compareTime + 1) << HplAtm128Timer0AsyncP__shiftFromScale();
+  compareTime = HplAtm128Timer0AsyncP__clock_to_sim(compareTime);
+  compareTime += sim_time();
+
+
+
+
+  phaseOffset = sim_time();
+  phaseOffset -= HplAtm128Timer0AsyncP__last_zero();
+  phaseOffset %= HplAtm128Timer0AsyncP__clock_to_sim(1 << HplAtm128Timer0AsyncP__shiftFromScale());
+  compareTime -= phaseOffset;
+
+  sim_log_debug(135U, "HplAtm128Timer0AsyncP", "Configuring new compare of %i for %i at time %llu  (@ %llu)\n", (int )compareVal, sim_node(), compareTime, sim_time());
+
+  evt->time = compareTime;
+}
+
+# 163 "../../tos/system/AMQueueImplP.nc"
+static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__sendDone(uint8_t last, message_t * msg, error_t err)
+#line 163
+{
+  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][last].msg = (void *)0;
+  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__tryToSend();
+  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Send__sendDone(last, msg, err);
 }
 
 # 290 "../../tos/lib/tossim/CpmModelC.nc"
@@ -10725,61 +10536,7 @@ static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__sendDone(am_id_t i
       /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__sendDone(/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()], msg, err);
     }
   else {
-      sim_log_debug(120U, "PointerBug", "%s received send done for %p, signaling for %p.\n", __FUNCTION__, msg, /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()]].msg);
-    }
-}
-
-#line 174
-static void /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__tryToSend(void )
-#line 174
-{
-  /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__nextPacket();
-  if (/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()] < 1) {
-      error_t nextErr;
-      message_t *nextMsg = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()]].msg;
-      am_id_t nextId = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMPacket__type(nextMsg);
-      am_addr_t nextDest = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMPacket__destination(nextMsg);
-      uint8_t len = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__Packet__payloadLength(nextMsg);
-
-#line 182
-      nextErr = /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__AMSend__send(nextId, nextDest, nextMsg, len);
-      if (nextErr != SUCCESS) {
-          /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__errorTask__postTask();
-        }
-    }
-}
-
-# 205 "../../tos/lib/tossim/SimSchedulerBasicP.nc"
-static error_t SimSchedulerBasicP__TaskBasic__postTask(uint8_t id)
-{
-  error_t result;
-
-#line 208
-  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
-#line 208
-    {
-      result = SimSchedulerBasicP__pushTask(id) ? SUCCESS : EBUSY;
-    }
-#line 210
-    __nesc_atomic_end(__nesc_atomic); }
-  if (result == SUCCESS) {
-      sim_log_debug(51U, "Scheduler", "Posting task %hhu.\n", id);
-      SimSchedulerBasicP__sim_scheduler_submit_event();
-    }
-  else {
-      sim_log_debug(52U, "Scheduler", "Posting task %hhu, but already posted.\n", id);
-    }
-  return result;
-}
-
-#line 77
-static void SimSchedulerBasicP__sim_scheduler_submit_event(void )
-#line 77
-{
-  if (SimSchedulerBasicP__sim_scheduler_event_pending[sim_node()] == FALSE) {
-      SimSchedulerBasicP__sim_scheduler_event[sim_node()].time = sim_time() + SimSchedulerBasicP__sim_config_task_latency();
-      sim_queue_insert(&SimSchedulerBasicP__sim_scheduler_event[sim_node()]);
-      SimSchedulerBasicP__sim_scheduler_event_pending[sim_node()] = TRUE;
+      sim_log_debug(121U, "PointerBug", "%s received send done for %p, signaling for %p.\n", __FUNCTION__, msg, /*AMQueueP.AMQueueImplP*/AMQueueImplP__0__queue[sim_node()][/*AMQueueP.AMQueueImplP*/AMQueueImplP__0__current[sim_node()]].msg);
     }
 }
 
@@ -10882,239 +10639,6 @@ static void CpmModelC__sim_gain_schedule_ack(int source, sim_time_t t, CpmModelC
   ackEvent->data = r;
 
   sim_queue_insert(ackEvent);
-}
-
-# 212 "../../tos/chips/atm128/timer/Atm128AlarmAsyncP.nc"
-static void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Alarm__startAt(uint32_t nt0, uint32_t ndt)
-#line 212
-{
-  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
-    {
-      /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__set[sim_node()] = TRUE;
-      /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__t0[sim_node()] = nt0;
-      /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__dt[sim_node()] = ndt;
-    }
-#line 218
-    __nesc_atomic_end(__nesc_atomic); }
-  /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__setInterrupt();
-}
-
-#line 90
-static void /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__setInterrupt(void )
-#line 90
-{
-  bool fired = FALSE;
-
-  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
-    {
-
-
-
-      uint8_t interrupt_in = 1 + /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Compare__get() - /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Timer__get();
-      uint8_t newOcr0;
-      uint8_t tifr = (uint8_t )/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__TimerCtrl__getInterruptFlag().flat;
-
-#line 101
-      sim_log_debug(121U, "Atm128AlarmAsyncP", "Atm128AlarmAsyncP: TIFR is %hhx\n", tifr);
-      if ((interrupt_in != 0 && interrupt_in < /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MINDT) || tifr & (1 << OCF0)) {
-          if (interrupt_in < /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MINDT) {
-              sim_log_debug(122U, "Atm128AlarmAsyncP", "Atm128AlarmAsyncP: under min: %hhu.\n", interrupt_in);
-            }
-          else {
-              sim_log_debug(123U, "Atm128AlarmAsyncP", "Atm128AlarmAsyncP: OCF set.\n");
-            }
-          {
-#line 109
-            __nesc_atomic_end(__nesc_atomic); 
-#line 109
-            return;
-          }
-        }
-
-      if (!/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__set[sim_node()]) {
-          newOcr0 = /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MAXT;
-          sim_log_debug(124U, "Atm128AlarmAsyncP", "Atm128AlarmAsyncP: no alarm set, set at max.\n");
-        }
-      else 
-        {
-          uint32_t now = /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Counter__get();
-
-#line 120
-          sim_log_debug(125U, "Atm128AlarmAsyncP", "Atm128AlarmAsyncP: now-t0 = %llu, dt = %llu\n", now - /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__t0[sim_node()], /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__dt[sim_node()]);
-
-          if ((uint32_t )(now - /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__t0[sim_node()]) >= /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__dt[sim_node()]) 
-            {
-              /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__set[sim_node()] = FALSE;
-              fired = TRUE;
-              newOcr0 = /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MAXT;
-            }
-          else 
-            {
-
-
-              uint32_t alarm_in = /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__t0[sim_node()] + /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__dt[sim_node()] - /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__base[sim_node()];
-
-              if (alarm_in > /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MAXT) {
-                newOcr0 = /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MAXT;
-                }
-              else {
-#line 136
-                if ((uint8_t )alarm_in < /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MINDT) {
-                  newOcr0 = /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__MINDT;
-                  }
-                else {
-#line 139
-                  newOcr0 = alarm_in;
-                  }
-                }
-            }
-        }
-#line 142
-      newOcr0--;
-      /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__setOcr0(newOcr0);
-    }
-#line 144
-    __nesc_atomic_end(__nesc_atomic); }
-  if (fired) {
-    /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP__0__Alarm__fired();
-    }
-}
-
-# 463 "../../tos/chips/atm128/timer/sim/HplAtm128Timer0AsyncP.nc"
-static void HplAtm128Timer0AsyncP__Compare__set(uint8_t t)
-#line 463
-{
-  sim_log_debug(142U, "HplAtm128Timer0AsyncP", "HplAtm128Timer0AsyncP: Setting compare: %hhu\n", t);
-  /* atomic removed: atomic calls only */
-#line 465
-  {
-
-
-
-
-    if (t == 0 || t >= 0xfe) {
-      t = 1;
-      }
-    if (t != * (volatile uint8_t *)&atm128RegFile[sim_node()][0x31]) {
-        * (volatile uint8_t *)&atm128RegFile[sim_node()][0x31] = t;
-        HplAtm128Timer0AsyncP__schedule_new_compare();
-      }
-  }
-}
-
-#line 267
-static void HplAtm128Timer0AsyncP__schedule_new_compare(void )
-#line 267
-{
-  if (HplAtm128Timer0AsyncP__compare[sim_node()] != (void *)0) {
-      HplAtm128Timer0AsyncP__cancel_compare();
-    }
-  if (HplAtm128Timer0AsyncP__Timer0__getScale() != AVR_CLOCK_OFF) {
-      sim_event_t *newEvent = HplAtm128Timer0AsyncP__allocate_compare();
-
-#line 273
-      HplAtm128Timer0AsyncP__configure_compare(newEvent);
-
-      HplAtm128Timer0AsyncP__compare[sim_node()] = newEvent;
-      sim_queue_insert(newEvent);
-    }
-}
-
-# 97 "../../tos/lib/tossim/sim_event_queue.c"
-static sim_event_t *sim_queue_allocate_event()
-#line 97
-{
-  sim_event_t *evt = (sim_event_t *)malloc(sizeof(sim_event_t ));
-
-#line 99
-  memset(evt, 0, sizeof(sim_event_t ));
-  evt->mote = sim_node();
-  return evt;
-}
-
-# 100 "../../tos/chips/atm128/timer/sim/HplAtm128Timer0AsyncP.nc"
-  void INTERRUPT_16(void )
-#line 100
-{
-  HplAtm128Timer0AsyncP__inOverflow[sim_node()] = TRUE;
-  HplAtm128Timer0AsyncP__Timer0__overflow();
-  HplAtm128Timer0AsyncP__inOverflow[sim_node()] = FALSE;
-}
-
-#line 508
-static void HplAtm128Timer0AsyncP__configure_overflow(sim_event_t *evt)
-#line 508
-{
-  sim_time_t overflowTime = 0;
-  uint8_t timerVal = HplAtm128Timer0AsyncP__Timer0__get();
-  uint8_t overflowVal = 0;
-
-
-
-
-  overflowTime = (overflowVal - timerVal) & 0xff;
-  if (overflowTime == 0) {
-      overflowTime = 256;
-    }
-
-
-
-
-  overflowTime = overflowTime << HplAtm128Timer0AsyncP__shiftFromScale();
-  overflowTime = HplAtm128Timer0AsyncP__clock_to_sim(overflowTime);
-  overflowTime += sim_time();
-  overflowTime -= (sim_time() - HplAtm128Timer0AsyncP__last_zero()) % (1 << HplAtm128Timer0AsyncP__shiftFromScale());
-
-  sim_log_debug(145U, "HplAtm128Timer0AsyncP", "Scheduling new overflow for %i at time %llu\n", sim_node(), overflowTime);
-
-  evt->time = overflowTime;
-}
-
-#line 94
-  void INTERRUPT_15(void )
-#line 94
-{
-
-  HplAtm128Timer0AsyncP__Compare__fired();
-}
-
-#line 231
-static void HplAtm128Timer0AsyncP__configure_compare(sim_event_t *evt)
-#line 231
-{
-  sim_time_t compareTime = 0;
-  sim_time_t phaseOffset = 0;
-  uint8_t timerVal = HplAtm128Timer0AsyncP__Timer0__get();
-  uint8_t compareVal = HplAtm128Timer0AsyncP__Compare__get();
-
-
-
-
-  compareTime = (compareVal - timerVal) & 0xff;
-  if (compareTime == 0) {
-      compareTime = 256;
-    }
-
-
-
-
-
-
-  compareTime = (compareTime + 1) << HplAtm128Timer0AsyncP__shiftFromScale();
-  compareTime = HplAtm128Timer0AsyncP__clock_to_sim(compareTime);
-  compareTime += sim_time();
-
-
-
-
-  phaseOffset = sim_time();
-  phaseOffset -= HplAtm128Timer0AsyncP__last_zero();
-  phaseOffset %= HplAtm128Timer0AsyncP__clock_to_sim(1 << HplAtm128Timer0AsyncP__shiftFromScale());
-  compareTime -= phaseOffset;
-
-  sim_log_debug(134U, "HplAtm128Timer0AsyncP", "Configuring new compare of %i for %i at time %llu  (@ %llu)\n", (int )compareVal, sim_node(), compareTime, sim_time());
-
-  evt->time = compareTime;
 }
 
 # 106 "../../tos/lib/tossim/TossimPacketModelC.nc"
@@ -11580,10 +11104,16 @@ static int __nesc_nido_resolve(int __nesc_mote,
     *size = sizeof(Tracker__open[__nesc_mote]);
     return 0;
   }
-  if (!strcmp(varname, "Tracker__inverse"))
+  if (!strcmp(varname, "Tracker__ETA"))
   {
-    *addr = (uintptr_t)&Tracker__inverse[__nesc_mote];
-    *size = sizeof(Tracker__inverse[__nesc_mote]);
+    *addr = (uintptr_t)&Tracker__ETA[__nesc_mote];
+    *size = sizeof(Tracker__ETA[__nesc_mote]);
+    return 0;
+  }
+  if (!strcmp(varname, "Tracker__R"))
+  {
+    *addr = (uintptr_t)&Tracker__R[__nesc_mote];
+    *size = sizeof(Tracker__R[__nesc_mote]);
     return 0;
   }
   if (!strcmp(varname, "Tracker__cluster_head_id"))
@@ -11764,7 +11294,8 @@ static void __nesc_nido_initialise(int __nesc_mote)
   Tracker__utility[__nesc_mote] = 0;
   Tracker__coalition_size[__nesc_mote] = 0;
   Tracker__open[__nesc_mote] = FALSE;
-  memset((void *)&Tracker__inverse[__nesc_mote], 0, sizeof Tracker__inverse[__nesc_mote]);
+  Tracker__ETA[__nesc_mote] = 0.65;
+  Tracker__R[__nesc_mote] = 8.0;
   memset((void *)&Tracker__cluster_head_id[__nesc_mote], 0, sizeof Tracker__cluster_head_id[__nesc_mote]);
 
   /* Module AMQueueEntryP__0 */

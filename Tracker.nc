@@ -28,6 +28,9 @@ implementation
 	int coalition_size = 0;
 	bool open = FALSE;
 
+	float ETA = 0.65;
+	float R = 8.0;
+
 	
 	float inverse[25][25];
 
@@ -164,30 +167,50 @@ implementation
 	}	
 
 	float getutility() {
-		float h[25][25], hT[25][25], hhT[25][25], beforeB[25][25], b[25];
+		//float h[25][25], hT[25][25], hhT[25][25], beforeB[25][25], b[25];
 		int i, j;
+		float value, sum1 = 0, sum2 = 0, avgDistance = 0, temp;
 
 		if (coalition_size == 1) return 0;
 		else if (coalition_size == 2) return 0.0001;
 
+		for (i = 0; i < coalition_size; i++)
+			avgDistance += estimates[i]->distance / 1000.0;
+		avgDistance /= ((float) coalition_size);
+
+		dbg("Moved", "avgDistance: %f", avgDistance);
+
+		for (i = 0; i < coalition_size; i++) {
+			temp = (estimates[i]->distance - abs(avgDistance - estimates[i]->distance));
+			sum1 += temp;
+		}
+		sum1 /= pow(R, 2);
+
+		for (i = 0; i < coalition_size; i++) {
+			sum2 += pow(x - estimates[i]->originX, 2) + pow(y - estimates[i]->originY, 2);
+		}
+		sum2 /= pow(R, 2);
+
+		value = (1 - ETA) * (coalition_size - sum1) - ETA * (sum2);
+
 		/* Initialize matrix H */
-		for (i = 0; i < coalition_size; i++) {
-			h[i][0] = estimates[i]->x;
-			h[i][1] = estimates[i]->y;
-		}
+		// for (i = 0; i < coalition_size; i++) {
+		// 	h[i][0] = estimates[i]->x;
+		// 	h[i][1] = estimates[i]->y;
+		// }
 
-		/* Initialize matrix b */
-		for (i = 0; i < coalition_size; i++) {
-			b[i] = pow(estimates[i]->x , 2) + pow(estimates[i]->y, 2) - (estimates[i]->distance / 1000.0);
-		}
+		// /* Initialize matrix b */
+		// for (i = 0; i < coalition_size; i++) {
+		// 	b[i] = pow(estimates[i]->x , 2) + pow(estimates[i]->y, 2) - (estimates[i]->distance / 1000.0);
+		// }
 
-		transpose2(h, hT, coalition_size, 2);
-		multiplyMatrices(hT, h, hhT, 2, coalition_size, coalition_size, 2);
-		cofactor(hhT, coalition_size);
-		multiplyMatrices(inverse, hT, beforeB, 2, 2, 2, coalition_size);
+		// transpose2(h, hT, coalition_size, 2);
+		// multiplyMatrices(hT, h, hhT, 2, coalition_size, coalition_size, 2);
+		// cofactor(hhT, coalition_size);
+		// multiplyMatrices(inverse, hT, beforeB, 2, 2, 2, coalition_size);
+		dbg("Moved", "Coalition value: %f", value);
 
-
-		return 0;
+		return value;
 	}
 
 	event void Boot.booted()
@@ -200,18 +223,18 @@ implementation
 
 	event void Timer.fired()
 	{
-		if (!busy) {
-			TrackerMsg* btrpkt = (TrackerMsg*)(call Packet.getPayload(&pkt, sizeof (TrackerMsg)));
-			btrpkt->nodeid = TOS_NODE_ID;
-			btrpkt->type = DIST;
-			btrpkt->distance = 3;
-			if (call AMSend.send(AM_BROADCAST_ADDR, &pkt, sizeof(TrackerMsg)) == SUCCESS) {
-				dbg("Info", "Packet sent");
-				busy = TRUE;
-			} else {
-				dbg("Info", "Couldn't send packet. Busy.");
-			}
-		}
+		// if (!busy) {
+		// 	TrackerMsg* btrpkt = (TrackerMsg*)(call Packet.getPayload(&pkt, sizeof (TrackerMsg)));
+		// 	btrpkt->nodeid = TOS_NODE_ID;
+		// 	btrpkt->type = DIST;
+		// 	btrpkt->distance = 3;
+		// 	if (call AMSend.send(AM_BROADCAST_ADDR, &pkt, sizeof(TrackerMsg)) == SUCCESS) {
+		// 		dbg("Info", "Packet sent");
+		// 		busy = TRUE;
+		// 	} else {
+		// 		dbg("Info", "Couldn't send packet. Busy.");
+		// 	}
+		// }
 	}
 
 	event void AMControl.startDone(error_t err) {
@@ -231,16 +254,37 @@ implementation
 	event void AMControl.stopDone(error_t err) {
 	}
 
+	void sendMessage(uint16_t nodeid, uint16_t type, uint16_t distance, uint16_t x, uint16_t y, uint16_t originX, uint16_t originY) {
+		if (!busy) {
+
+			TrackerMsg* btrpkt = (TrackerMsg*)(call Packet.getPayload(&pkt, sizeof (TrackerMsg)));
+			btrpkt->nodeid = nodeid;
+			btrpkt->type = type;
+			btrpkt->distance = distance;
+			btrpkt->x = x;
+			btrpkt->y = y;
+			btrpkt->originX = originX;
+			btrpkt->originY = originY;
+
+			if (call AMSend.send(AM_BROADCAST_ADDR, &pkt, sizeof(TrackerMsg)) == SUCCESS) {
+				dbg("Info", "Packet sent");
+				busy = TRUE;
+			} else {
+				dbg("Info", "Couldn't send packet. Busy.");
+			}
+		}
+	}
+
 	event message_t* Receive.receive(message_t* msg, void* payload, uint8_t len) {
 		if (len == sizeof(TrackerMsg)) {
 			TrackerMsg* btrpkt = (TrackerMsg*)payload;
 
 			switch (btrpkt->type) {
-
+/*
 			case DIST:
 				dbg("Info", "Nodeid: %d, distance: %d\n", btrpkt->nodeid, btrpkt->distance);
 				break;
-
+*/
 			case COORD:
 				dbg("Moved", "Coords: %d, %d", btrpkt->x, btrpkt->y);
 
@@ -278,7 +322,6 @@ implementation
 					estimates[++coalition_size] = btrpkt;
 					if (getutility() > utility) {
 
-						// keep
 					} else {
 						coalition_size--;
 					}
